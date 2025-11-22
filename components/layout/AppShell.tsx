@@ -8,11 +8,16 @@ interface AppShellProps {
 
 export default function AppShell({ children }: AppShellProps) {
   return (
-    <div className="min-h-screen">
+    <div className="max-w-360 mx-auto flex min-h-screen flex-col">
       <Topbar />
-      <div className="flex">
+      <div className="relative flex flex-1 gap-16 bg-neutral-300 p-5 2xl:p-10">
         <Sidebar />
-        <main>{children}</main>
+        <main className="rounded-cm flex-1 overflow-y-auto bg-white p-5 xl:p-8">
+          {children}
+
+          <div className="h-screen">hello</div>
+          <div className="h-screen">hello</div>
+        </main>
       </div>
     </div>
   );

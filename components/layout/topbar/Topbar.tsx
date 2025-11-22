@@ -37,8 +37,8 @@ const UTILITY_NAV_ITEMS: NavItem[] = [
 
 export default function Topbar() {
   return (
-    <header className="bg-white p-10">
-      <div className="container mx-auto flex items-center justify-between gap-8">
+    <header className="sticky top-0 z-10 bg-white bg-white p-5 2xl:p-10">
+      <div className="mx-auto flex w-full items-center justify-between gap-6 xl:gap-8">
         <div className="flex w-full gap-7">
           <Link href={ROUTES.HOME} className="inline-flex items-center" aria-label="Go to home">
             <div className="bg-brand-600 w-14.5 flex h-14 items-center justify-center rounded-sm">
@@ -46,7 +46,7 @@ export default function Topbar() {
             </div>
           </Link>
 
-          <div className="max-w-100 relative w-full">
+          <div className="max-w-100 relative hidden w-full xl:block">
             <label className="sr-only" htmlFor="topbar-search">
               Search
             </label>
@@ -54,30 +54,38 @@ export default function Topbar() {
               id="topbar-search"
               type="text"
               placeholder="Search"
-              className="placeholder:text-secondary h-full w-full rounded-sm bg-neutral-300 py-2 pl-11 pr-4 text-sm text-neutral-700"
+              className="placeholder:text-secondary focus:ring-brand-600/30 focus:border-brand-600 focus:shadow-brand-600 h-full w-full rounded-sm bg-neutral-300 py-2 pl-11 pr-4 text-black outline-none transition-shadow placeholder:text-sm focus:border focus:bg-white focus:ring-2"
             />
             <SearchIcon className="pointer-events-none absolute left-3 top-1/2 size-6 -translate-y-1/2 text-neutral-700" />
           </div>
         </div>
 
-        <nav className="flex items-center gap-6">
+        <nav className="hidden items-center gap-6  lg:flex">
           {MAIN_NAV_ITEMS.map((item) => (
             <TopbarNavItem key={item.href} item={item} />
           ))}
         </nav>
 
-        <div className="h-12 w-px rounded-sm bg-neutral-600" />
+        <div className="hidden h-12 w-px shrink-0 rounded-sm bg-neutral-600 lg:block" />
 
         <Link
           href={ROUTES.SUBSCRIBE}
-          className={buttonVariants({ variant: 'primary', size: 'sm', className: 'px-4' })}
+          className={buttonVariants({
+            variant: 'primary',
+            size: 'sm',
+            className: 'hidden px-4 lg:flex',
+          })}
         >
           Subscribe
         </Link>
 
         <div className="flex items-center gap-6">
           {UTILITY_NAV_ITEMS.map((item) => (
-            <TopbarNavItem key={item.href} item={item} />
+            <TopbarNavItem
+              key={item.href}
+              item={item}
+              labelClassName="hidden min-w-[1500px]:block"
+            />
           ))}
 
           <button

@@ -10,9 +10,10 @@ import type { NavItem } from './types';
 
 interface TopbarNavItemProps {
   item: NavItem;
+  labelClassName?: string;
 }
 
-export default function TopbarNavItem({ item }: TopbarNavItemProps) {
+export default function TopbarNavItem({ item, labelClassName }: TopbarNavItemProps) {
   const pathname = usePathname();
   const isActive = useMemo(() => {
     if (item.href === ROUTES.HOME) {
@@ -36,10 +37,11 @@ export default function TopbarNavItem({ item }: TopbarNavItemProps) {
       />
       <span
         className={cn(
-          ' hidden whitespace-nowrap font-medium leading-6 lg:block',
+          ' whitespace-nowrap text-[.8125rem] font-medium leading-6 2xl:text-base',
           isActive
             ? 'text-primary'
-            : 'text-secondary  group-hover:text-brand-600 transition-colors duration-300'
+            : 'text-secondary  group-hover:text-brand-600 transition-colors duration-300',
+          labelClassName
         )}
       >
         {item.label}
