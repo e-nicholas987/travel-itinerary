@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import type { ComponentType } from 'react';
+import Link from "next/link";
+import type { ComponentType } from "react";
 
-import { cn } from '@/lib/utils/cn';
+import { cn } from "@/lib/utils/cn";
 import {
   AirplaneTiltIcon,
   BuildingsIcon,
@@ -13,10 +13,10 @@ import {
   RoadHorizonIcon,
   StudentIcon,
   SuitcaseRollingIcon,
-} from '@/components/ui/icons';
-import NewspaperClippingIcon from '../ui/icons/NewspaperClippingIcon';
-import { useActiveRoute } from '@/hooks/useActiveRoute';
-import { ROUTES } from '@/constants/routes';
+} from "@/components/ui/icons";
+import NewspaperClippingIcon from "../ui/icons/NewspaperClippingIcon";
+import { useActiveRoute } from "@/hooks/useActiveRoute";
+import { ROUTES } from "@/constants/routes";
 
 type SidebarItem = {
   label: string;
@@ -25,21 +25,25 @@ type SidebarItem = {
 };
 
 const SIDEBAR_ITEMS: SidebarItem[] = [
-  { label: 'Activities', href: ROUTES.ACTIVITIES, Icon: RoadHorizonIcon },
-  { label: 'Hotels', href: ROUTES.HOTELS, Icon: BuildingsIcon },
-  { label: 'Flights', href: ROUTES.FLIGHTS, Icon: AirplaneTiltIcon },
-  { label: 'Study', href: ROUTES.STUDY, Icon: StudentIcon },
-  { label: 'Visa', href: ROUTES.VISA, Icon: NewspaperClippingIcon },
-  { label: 'Immigration', href: ROUTES.IMMIGRATION, Icon: SuitcaseRollingIcon },
-  { label: 'Medical', href: ROUTES.MEDICAL, Icon: FirstAidKitIcon },
-  { label: 'Vacation Packages', href: ROUTES.VACATION_PACKAGES, Icon: PackageIcon },
+  { label: "Activities", href: ROUTES.ACTIVITIES, Icon: RoadHorizonIcon },
+  { label: "Hotels", href: ROUTES.HOTELS, Icon: BuildingsIcon },
+  { label: "Flights", href: ROUTES.FLIGHTS, Icon: AirplaneTiltIcon },
+  { label: "Study", href: ROUTES.STUDY, Icon: StudentIcon },
+  { label: "Visa", href: ROUTES.VISA, Icon: NewspaperClippingIcon },
+  { label: "Immigration", href: ROUTES.IMMIGRATION, Icon: SuitcaseRollingIcon },
+  { label: "Medical", href: ROUTES.MEDICAL, Icon: FirstAidKitIcon },
+  {
+    label: "Vacation Packages",
+    href: ROUTES.VACATION_PACKAGES,
+    Icon: PackageIcon,
+  },
 ];
 
 export default function Sidebar() {
   const isActiveRoute = useActiveRoute();
 
   return (
-    <aside className="w-75 pb-23.5 sticky left-0 top-8 z-10 flex h-fit max-h-[calc(100vh-12.5rem)] flex-col space-y-16 rounded-sm bg-white px-2 pt-6">
+    <div className="pb-23.5 flex flex-col space-y-16 rounded-sm bg-white px-2 pt-6">
       <nav className="space-y-3 overflow-y-auto px-4">
         {SIDEBAR_ITEMS.map((item) => {
           const isActive = isActiveRoute(item.href);
@@ -47,22 +51,22 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              aria-current={isActive ? 'page' : undefined}
+              aria-current={isActive ? "page" : undefined}
               className={cn(
-                'text-secondary group flex cursor-pointer items-center gap-2  rounded-sm px-3.5 py-4 text-sm font-medium 2xl:text-base',
-                isActive ? 'bg-brand-600/10' : 'hover:bg-neutral-300/50'
+                "text-secondary group flex cursor-pointer items-center gap-2  rounded-sm px-3.5 py-4 text-sm font-medium 2xl:text-base",
+                isActive ? "bg-brand-600/10" : "hover:bg-neutral-300/50"
               )}
             >
               <item.Icon
                 className={cn(
-                  'size-8 text-neutral-700 transition-colors',
-                  isActive ? 'text-brand-600' : 'text-neutral-700'
+                  "size-8 text-neutral-700 transition-colors",
+                  isActive ? "text-brand-600" : "text-neutral-700"
                 )}
               />
               <span
                 className={cn(
-                  'truncate transition-colors',
-                  isActive ? 'text-brand-600' : 'text-secondary'
+                  "truncate transition-colors",
+                  isActive ? "text-brand-600" : "text-secondary"
                 )}
               >
                 {item.label}
@@ -73,10 +77,7 @@ export default function Sidebar() {
       </nav>
 
       <div className="px-4">
-        <button
-          type="button"
-          className="py-4.5 flex w-full items-center gap-2 rounded-md bg-neutral-300 px-3.5"
-        >
+        <div className="py-4.5 flex w-full items-center gap-2 rounded-md bg-neutral-300 px-3.5">
           <span className="bg-brand-600 size-12.5 flex items-center justify-center rounded-sm font-medium text-white">
             Go
           </span>
@@ -96,8 +97,8 @@ export default function Sidebar() {
               <CaretUpDownIcon className="size-6 text-neutral-700" />
             </button>
           </div>
-        </button>
+        </div>
       </div>
-    </aside>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   /* Brand Colors */
@@ -19,6 +19,10 @@
   /* Error Palette */
   --color-error-100: #fbeae9;
   --color-error-900: #9e0a05;
+
+  /* Layout */
+  --sidebar-width: 300px;
+  --topbar-height: 134px;
 }
 
 body {
