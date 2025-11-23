@@ -10,7 +10,7 @@ export function useActiveRoute(): (route: string) => boolean {
     (route: string) => {
       if (!pathname) return false;
       if (route === "/") return pathname === "/";
-      return pathname === route || pathname.startsWith(`/${route}`);
+      return pathname === route || pathname.startsWith(`${route}/`);
     },
     [pathname]
   );

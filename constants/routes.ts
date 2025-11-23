@@ -9,14 +9,14 @@ const ROUTES = {
   CARTS: "/carts",
   CREATE: "/create",
   PROFILE: "/profile",
-  ACTIVITIES: "trips/search/activities",
-  HOTELS: "trips/search/hotels",
-  FLIGHTS: "trips/search/flights",
-  STUDY: "trips/study",
-  VISA: "trips/visa",
-  IMMIGRATION: "trips/immigration",
-  MEDICAL: "trips/medical",
-  VACATION_PACKAGES: "trips/vacation-packages",
+  ACTIVITIES: "/trips/search/activities",
+  HOTELS: "/trips/search/hotels",
+  FLIGHTS: "/trips/search/flights",
+  STUDY: "/trips/study",
+  VISA: "/trips/visa",
+  IMMIGRATION: "/trips/immigration",
+  MEDICAL: "/trips/medical",
+  VACATION_PACKAGES: "/trips/vacation-packages",
 } as const;
 
 type RouteKey = keyof typeof ROUTES;
