@@ -25,10 +25,29 @@
   /* Error Palette */
   --color-error-100: #fbeae9;
   --color-error-900: #9e0a05;
+}
 
-  /* Layout */
-  --sidebar-width: 300px;
-  --topbar-height: 134px;
+@layer base {
+  :root {
+    --topbar-height: 8.375rem;
+  }
+}
+
+@layer utilities {
+  .layout-shell {
+    --layout-offset: calc(var(--topbar-height) + 1.25rem);
+    padding-top: var(--layout-offset);
+  }
+
+  @media (min-width: 1536px) {
+    .layout-shell {
+      --layout-offset: calc(var(--topbar-height) + 2.5rem);
+    }
+  }
+
+  .top-layout-offset {
+    top: var(--layout-offset);
+  }
 }
 
 body {
