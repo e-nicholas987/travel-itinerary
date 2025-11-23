@@ -48,7 +48,7 @@ export default function Topbar() {
           className="inline-flex items-center"
           aria-label="Go to home"
         >
-          <div className="bg-brand-600 w-14.5 flex h-14 items-center justify-center rounded-sm">
+          <div className="bg-primary-600 w-14.5 flex h-14 items-center justify-center rounded-sm">
             <Image
               src={IMAGES.logo}
               alt="Go logo"
@@ -67,7 +67,7 @@ export default function Topbar() {
             id="topbar-search"
             type="text"
             placeholder="Search"
-            className="placeholder:text-secondary focus:ring-brand-600/30 focus:border-brand-600 focus:shadow-brand-600 h-full w-full rounded-sm bg-neutral-300 py-2 pl-11 pr-4 text-black outline-none transition-shadow placeholder:text-sm focus:border focus:bg-white focus:ring-2"
+            className="placeholder:text-black-secondary focus:ring-primary-600/30 focus:border-primary-600 focus:shadow-primary-600 h-full w-full rounded-sm bg-neutral-300 py-2 pl-11 pr-4 text-black outline-none transition-shadow placeholder:text-sm focus:border focus:bg-white focus:ring-2"
           />
           <SearchIcon className="pointer-events-none absolute left-3 top-1/2 size-6 -translate-y-1/2 text-neutral-700" />
         </div>
@@ -107,7 +107,7 @@ export default function Topbar() {
           className="flex items-center gap-3.5"
         >
           <Image
-            src={IMAGES.avatar}
+            src={IMAGES.userAvatar}
             alt="Profile"
             width={52}
             height={52}

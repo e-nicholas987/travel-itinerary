@@ -43,7 +43,7 @@ export default function Sidebar() {
   const isActiveRoute = useActiveRoute();
 
   return (
-    <div className="pb-23.5 flex flex-col space-y-16 rounded-sm bg-white px-2 pt-6">
+    <div className="pb-23.5 overflow-y-hidden flex flex-col space-y-16 rounded-sm bg-white px-2 pt-6">
       <nav className="space-y-3 overflow-y-auto px-4">
         {SIDEBAR_ITEMS.map((item) => {
           const isActive = isActiveRoute(item.href);
@@ -53,20 +53,20 @@ export default function Sidebar() {
               href={item.href}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "text-secondary group flex cursor-pointer items-center gap-2  rounded-sm px-3.5 py-4 text-sm font-medium 2xl:text-base",
-                isActive ? "bg-brand-600/10" : "hover:bg-neutral-300/50"
+                "text-black-secondary group flex cursor-pointer items-center gap-2  rounded-sm px-3.5 py-4 text-sm font-medium 2xl:text-base",
+                isActive ? "bg-primary-600/10" : "hover:bg-neutral-300/50"
               )}
             >
               <item.Icon
                 className={cn(
                   "size-8 text-neutral-700 transition-colors",
-                  isActive ? "text-brand-600" : "text-neutral-700"
+                  isActive ? "text-primary-600" : "text-neutral-700"
                 )}
               />
               <span
                 className={cn(
                   "truncate transition-colors",
-                  isActive ? "text-brand-600" : "text-secondary"
+                  isActive ? "text-primary-600" : "text-black-secondary"
                 )}
               >
                 {item.label}
@@ -78,12 +78,12 @@ export default function Sidebar() {
 
       <div className="px-4">
         <div className="py-4.5 flex w-full items-center gap-2 rounded-md bg-neutral-300 px-3.5">
-          <span className="bg-brand-600 size-12.5 flex items-center justify-center rounded-sm font-medium text-white">
+          <span className="bg-primary-600 size-12.5 flex items-center justify-center rounded-sm font-medium text-white">
             Go
           </span>
 
           <div
-            className="text-secondary flex flex-1 items-center justify-between"
+            className="text-black-secondary flex flex-1 items-center justify-between"
             aria-label="Open personal account menu"
           >
             <span className="text-xs font-medium">Personal Account</span>
