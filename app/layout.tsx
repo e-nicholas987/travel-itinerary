@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Topbar from "@/components/layout/topbar/Topbar";
+import Sidebar from "@/components/layout/Sidebar";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -23,13 +24,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
-        <div className="max-w-360 mx-auto flex min-h-screen flex-col">
-          <header className="h-(--topbar-height) fixed bg-white top-0 z-10 inset-x-0">
-            <Topbar />
-          </header>
-          <main className="flex flex-1 pb-5 xl:pb-10 mt-(--topbar-height)">
-            {children}
-          </main>
+        <header className="h-(--topbar-height) fixed bg-white top-0 z-10 inset-x-0">
+          <Topbar />
+        </header>
+        <div className="max-w-360 mt-(--topbar-height) mx-auto flex min-h-svh bg-neutral-300 gap-8 2xl:gap-16 p-5 2xl:p-10">
+          <aside className="w-75 shrink-0 sticky top-[calc(var(--topbar-height)+1.25rem)] 2xl:top-[calc(var(--topbar-height)+2.5rem)] h-fit max-h-[calc(100vh-12.5rem)]  left-0">
+            <Sidebar />
+          </aside>
+          <main className="flex flex-1">{children}</main>
         </div>
       </body>
     </html>
