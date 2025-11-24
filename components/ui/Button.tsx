@@ -23,7 +23,7 @@ export function buttonVariants({
   className?: string;
 }) {
   const base =
-    "inline-flex items-center relative justify-center gap-2 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60";
+    "inline-flex cursor-pointer items-center relative justify-center gap-2 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60";
 
   const variants = {
     primary: "bg-primary-600 text-white hover:bg-primary-600/90 shadow-sm",
