@@ -9,21 +9,29 @@ import type { SearchAttractionsParams } from "@/features/activities/types";
 import { useSearchAttractions } from "../hooks/useSearchAttractions";
 import ActivitiesCard from "./ActivitiesCard";
 import AddActivitiesForm from "./AddActivitiesForm";
+import { getApiError } from "@/lib/utils/getApiError";
+import ErrorBanner from "@/components/shared/ErrorBanner";
 
 export default function ActivitiesSearchPage() {
   const [searchParams, setSearchParams] =
     useState<SearchAttractionsParams | null>(null);
-  const { data: locations, isLoading: isLoadingLocations } =
-    useSearchAttractions({
-      params: searchParams ?? {
-        id: "",
-      },
-      enabled: !!searchParams,
-    });
+  const {
+    data: locations,
+    isLoading: isLoadingLocations,
+    error: searchAttractionsError,
+  } = useSearchAttractions({
+    params: searchParams ?? {
+      id: "",
+    },
+    enabled: !!searchParams,
+  });
 
   const handleSearch = (params: SearchAttractionsParams) => {
     setSearchParams(params);
   };
+
+  const errorMessage =
+    searchAttractionsError && getApiError(searchAttractionsError);
 
   return (
     <section className="flex-1 rounded-sm bg-white p-8">
@@ -47,6 +55,8 @@ export default function ActivitiesSearchPage() {
           itinerary.
         </p>
       </header>
+
+      {errorMessage && <ErrorBanner message={errorMessage} />}
 
       <AddActivitiesForm
         onSearch={handleSearch}
