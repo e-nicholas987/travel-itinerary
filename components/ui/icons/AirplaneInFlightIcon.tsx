@@ -1,4 +1,4 @@
-export default function AirplaneInFlight({
+export default function AirplaneInFlightIcon({
   className,
 }: {
   className?: string;

@@ -6,11 +6,12 @@ import { BuildingsIcon } from "@/components/ui/icons";
 import { ROUTES } from "@/constants/routes";
 import type { SearchHotelsParams } from "@/features/hotels/types";
 import { useSearchHotels } from "@/features/hotels/hooks/useSearchHotels";
+import ErrorBanner from "@/components/shared/ErrorBanner";
+import PageHeaderWithBack from "@/components/shared/PageHeader";
+import ResultsHeader from "@/components/shared/ResultsHeader";
 import HotelCard from "@/features/hotels/components/HotelCard";
 import HotelsSearchForm from "@/features/hotels/components/HotelsSearchForm";
 import { getApiError } from "@/lib/utils/getApiError";
-import ErrorBanner from "@/components/shared/ErrorBanner";
-import PageHeaderWithBack from "@/components/shared/PageHeader";
 import { useRouteQueryParams } from "@/hooks";
 
 export default function HotelsSearchPage() {
@@ -59,16 +60,11 @@ export default function HotelsSearchPage() {
 
       {hotelsResponse?.data && (
         <section className="space-y-4">
-          <header className="flex flex-col justify-between gap-2 md:flex-row md:items-center">
-            <div>
-              <h2 className="text-base font-semibold leading-6 tracking-[-0.02em]">
-                Available hotels
-              </h2>
-              <p className="text-xs font-medium text-black-secondary">
-                Showing {hotelsResponse.data.hotels.length} properties
-              </p>
-            </div>
-          </header>
+          <ResultsHeader
+            title="Available hotels"
+            count={hotelsResponse.data.hotels.length}
+            label="properties"
+          />
 
           {hotelsResponse.data.hotels.length === 0 ? (
             <div className="flex flex-col items-center justify-center rounded-sm border border-dashed border-neutral-300 bg-neutral-100 px-6 py-10 text-center">

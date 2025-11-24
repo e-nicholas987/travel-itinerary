@@ -12,7 +12,6 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { useLanguages } from "@/queries";
 import type { SelectOption } from "@/types/common";
 
-import { SORT_OPTIONS } from "../constants/selectOptions";
 import AdvancedFilters from "./AdvancedFilters";
 import {
   activitiesSearchSchema,
@@ -30,6 +29,12 @@ type ActivitiesSearchFormProps = {
   isLoadingLocations: boolean;
   locations?: SearchAttractionsResponse;
 };
+
+const sortOptions: SelectOption[] = [
+  { label: "Trending", value: "trending" },
+  { label: "Best booking score", value: "attr_book_score" },
+  { label: "Lowest price", value: "lowest_price" },
+];
 
 const defaultValues: ActivitiesSearchFormValues = {
   id: "",
@@ -184,7 +189,7 @@ export default function ActivitiesSearchForm({
                 placeholder="Select sort by"
                 value={field.value}
                 onChange={field.onChange}
-                options={SORT_OPTIONS}
+                options={sortOptions}
                 containerClassName="md:flex-[2]"
               />
             )}

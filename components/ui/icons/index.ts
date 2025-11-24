@@ -22,6 +22,6 @@ export { default as UserPlusIcon } from "./UserPlusIcon";
 export { default as ArrowLeftIcon } from "./ArrowLeftIcon";
 export { default as ArrowRightIcon } from "./ArrowRightIcon";
 export { default as CalendarBlankIcon } from "./CalendarBlankIcon";
-export { default as AirplaneInFlight } from "./AirplaneInFlight";
+export { default as AirplaneInFlightIcon } from "./AirplaneInFlightIcon";
 export { default as WarehouseIcon } from "./WarehouseIcon";
 export { default as StarIcon } from "./StarIcon";

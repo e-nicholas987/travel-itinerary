@@ -6,11 +6,12 @@ import { ListChecksIcon } from "@/components/ui/icons";
 import { ROUTES } from "@/constants/routes";
 import type { SearchAttractionsParams } from "@/features/activities/types";
 import { useSearchAttractions } from "../hooks/useSearchAttractions";
+import ErrorBanner from "@/components/shared/ErrorBanner";
+import PageHeaderWithBack from "@/components/shared/PageHeader";
+import ResultsHeader from "@/components/shared/ResultsHeader";
 import ActivitiesCard from "./ActivitiesCard";
 import ActivitiesSearchForm from "./ActivitiesSearchForm";
 import { getApiError } from "@/lib/utils/getApiError";
-import ErrorBanner from "@/components/shared/ErrorBanner";
-import PageHeaderWithBack from "@/components/shared/PageHeader";
 
 export default function ActivitiesSearchPage() {
   const [searchParams, setSearchParams] =
@@ -57,16 +58,11 @@ export default function ActivitiesSearchPage() {
 
       {locations?.data && (
         <section className="space-y-4">
-          <header className="flex flex-col justify-between gap-2 md:flex-row md:items-center">
-            <div>
-              <h2 className="text-base font-semibold leading-6 tracking-[-0.02em]">
-                Available activities
-              </h2>
-              <p className="text-xs font-medium text-black-secondary">
-                Showing {locations.data.products.length} experiences
-              </p>
-            </div>
-          </header>
+          <ResultsHeader
+            title="Available activities"
+            count={locations.data.products.length}
+            label="experiences"
+          />
 
           {locations.data.products.length === 0 ? (
             <div className="flex flex-col items-center justify-center rounded-sm border border-dashed border-neutral-300 bg-neutral-100 px-6 py-10 text-center">

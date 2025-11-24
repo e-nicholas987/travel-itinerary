@@ -5,7 +5,6 @@ import buildQueryString from "@/lib/utils/buildQueryString";
 import type {
   SearchFlightsParams,
   SearchFlightsResponse,
-  SearchFlightDestinationsParams,
   SearchFlightDestinationsResponse,
 } from "../types";
 
@@ -20,11 +19,11 @@ export const searchFlights = async (
 };
 
 export const searchFlightDestinations = async (
-  params: SearchFlightDestinationsParams
+  query: string
 ): Promise<SearchFlightDestinationsResponse> => {
   const { data } = await apiClient.get(
     API_ROUTES.flights.searchFlightDestination,
-    { params }
+    { params: { query } }
   );
 
   return data;

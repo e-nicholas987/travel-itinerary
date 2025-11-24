@@ -5,7 +5,6 @@ import type {
   SearchAttractionsResponse,
   SearchAttractionLocationResponse,
 } from "../types";
-import buildQueryString from "@/lib/utils/buildQueryString";
 
 export const searchAttractionLocations = async (
   query: string
@@ -21,11 +20,9 @@ export const searchAttractionLocations = async (
 export const searchAttractions = async (
   params: SearchAttractionsParams
 ): Promise<SearchAttractionsResponse> => {
-  const queryParams: Record<string, string | number | undefined> = {
-    ...params,
-  };
   const { data } = await apiClient.get(
-    buildQueryString(API_ROUTES.attraction.searchAttractions, queryParams)
+    API_ROUTES.attraction.searchAttractions,
+    { params }
   );
 
   return data;

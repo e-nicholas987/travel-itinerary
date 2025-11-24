@@ -1,15 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-
-import type { SearchFlightDestinationsParams } from "../types";
 import { searchFlightDestinations } from "../api/flightServices";
 
-export const useSearchFlightDestinations = (
-  params: SearchFlightDestinationsParams
-) =>
+export const useSearchFlightDestinations = (query: string) =>
   useQuery({
-    queryKey: ["flights", "search-destinations", params],
-    queryFn: () => searchFlightDestinations(params),
-    enabled: !!params.query,
+    queryKey: ["flights", "search-destinations", query],
+    queryFn: () => searchFlightDestinations(query),
+    enabled: !!query,
   });
-
-

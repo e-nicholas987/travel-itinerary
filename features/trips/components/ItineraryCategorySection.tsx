@@ -1,5 +1,5 @@
 import {
-  AirplaneInFlight,
+  AirplaneInFlightIcon,
   RoadHorizonIcon,
   WarehouseIcon,
 } from "@/components/ui/icons";
@@ -44,7 +44,7 @@ const ITINERARY_CATEGORY_CONFIG: Record<
   },
   flights: {
     label: "Flights",
-    icon: AirplaneInFlight,
+    icon: AirplaneInFlightIcon,
     href: ROUTES.FLIGHTS,
   },
 };
