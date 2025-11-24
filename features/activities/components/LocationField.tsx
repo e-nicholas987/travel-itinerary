@@ -19,7 +19,7 @@ export default function LocationField() {
     useSearchAttractionLocation(debouncedLocation);
 
   const destinations = useMemo(
-    () => locations?.data.destinations ?? [],
+    () => locations?.data?.destinations ?? [],
     [locations]
   );
 

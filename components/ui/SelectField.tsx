@@ -27,7 +27,6 @@ interface SelectFieldProps
   emptyStateText?: string;
   onChange?: (value: string) => void;
   name?: string;
-  inputRef?: React.Ref<HTMLInputElement>;
 }
 
 export default function SelectField({
@@ -55,7 +54,9 @@ export default function SelectField({
     if (!isOpen || !inputRef.current) {
       return;
     }
-    inputRef.current.focus();
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
   }, [isOpen, inputRef]);
 
   useEffect(() => {
@@ -115,6 +116,7 @@ export default function SelectField({
             {enableSearch && (
               <div className="border-b z-10 sticky top-0 bg-white border-neutral-200 px-2 pb-2 pt-2">
                 <input
+                  ref={inputRef}
                   type="text"
                   value={searchValue}
                   onChange={(event) => {

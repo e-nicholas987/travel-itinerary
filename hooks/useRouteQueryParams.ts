@@ -32,6 +32,7 @@ export const useRouteQueryParams = () => {
         if (typeof value === "string") {
           nextSearchParams.set(key, value);
         } else if (Array.isArray(value)) {
+          console.log("isArray", value);
           value.forEach((v) => nextSearchParams.append(key, v));
         }
       });

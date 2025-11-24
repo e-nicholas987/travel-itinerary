@@ -52,7 +52,7 @@ export type SearchAttractionLocationResponse = {
   status: boolean;
   message: string;
   timestamp: number;
-  data: SearchLocationData;
+  data?: SearchLocationData;
 };
 
 export type SortBy = "trending" | "attr_book_score" | "lowest_price";

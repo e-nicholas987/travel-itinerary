@@ -19,10 +19,10 @@ import CurrencyField from "@/components/shared/CurrencyField";
 import { useLanguages } from "@/queries";
 import { useSearchAttractions } from "../hooks/useSearchAttractions";
 import AdvancedFilters from "./AdvancedFilters";
+import ActivitiesCard from "./ActivitiesCard";
 import { SORT_OPTIONS } from "../constants/selectOptions";
 
 export default function ActivitiesSearchPage() {
-  const [isSearchClicked, setIsSearchClicked] = useState<boolean>(false);
   const { setParams, getParam, getAllParams, clearAllParams } =
     useRouteQueryParams();
   const { data: languages, isLoading: isLoadingLanguages } = useLanguages();
@@ -40,7 +40,7 @@ export default function ActivitiesSearchPage() {
         ufiFilters: getAllParams("ufi").join(","),
         labelFilters: getAllParams("label").join(","),
       },
-      enabled: isSearchClicked,
+      enabled: Boolean(getParam("locationId")),
     });
 
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(true);
@@ -51,10 +51,6 @@ export default function ActivitiesSearchPage() {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    setIsSearchClicked(true);
-    setTimeout(() => {
-      setIsSearchClicked(false);
-    }, 500);
   };
 
   return (
@@ -160,7 +156,7 @@ export default function ActivitiesSearchPage() {
               onClick={clearAdvancedFilters}
               className="hover:bg-neutral-300/80"
             >
-              Clear filters
+              Reset
             </Button>
 
             <Button
@@ -177,6 +173,27 @@ export default function ActivitiesSearchPage() {
 
         {showAdvancedFilters && <AdvancedFilters response={locations} />}
       </form>
+
+      {locations?.data && (
+        <section className="space-y-4">
+          <header className="flex flex-col justify-between gap-2 md:flex-row md:items-center">
+            <div>
+              <h2 className="text-base font-semibold leading-6 tracking-[-0.02em]">
+                Available activities
+              </h2>
+              <p className="text-xs font-medium text-black-secondary">
+                Showing {locations.data.products.length} experiences
+              </p>
+            </div>
+          </header>
+
+          <div className="space-y-3">
+            {locations.data.products.map((item) => (
+              <ActivitiesCard key={item.id} activity={item} isSearchResult />
+            ))}
+          </div>
+        </section>
+      )}
     </section>
   );
 }

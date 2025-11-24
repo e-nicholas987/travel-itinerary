@@ -57,7 +57,7 @@ export default function AdvancedFilters({
           options={activityTypeFilters}
           selected={getAllParams("type") ?? []}
           onToggle={(value) => {
-            setParams({ type: value });
+            setParams({ type: [value] });
           }}
         />
       )}
@@ -67,7 +67,7 @@ export default function AdvancedFilters({
           options={priceFilters}
           selected={getAllParams("price") ?? []}
           onToggle={(value) => {
-            setParams({ price: value });
+            setParams({ price: [value] });
           }}
         />
       )}
@@ -77,7 +77,7 @@ export default function AdvancedFilters({
           options={ufiFilters}
           selected={getAllParams("ufi") ?? []}
           onToggle={(value) => {
-            setParams({ ufi: value });
+            setParams({ ufi: [value] });
           }}
         />
       )}
@@ -87,7 +87,7 @@ export default function AdvancedFilters({
           options={labelFilters}
           selected={getAllParams("label") ?? []}
           onToggle={(value) => {
-            setParams({ label: value });
+            setParams({ label: [value] });
           }}
         />
       )}
