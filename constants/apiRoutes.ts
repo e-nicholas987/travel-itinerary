@@ -8,7 +8,7 @@ export const API_ROUTES = {
     searchHotelDestinations: "/hotels/searchDestination",
     getSortBy: "/hotels/getSortBy",
     getFilter: "/hotels/getFilter",
-    searchHotels: "/hotel/searchHotels",
+    searchHotels: "/hotels/searchHotels",
   },
 
   flights: {

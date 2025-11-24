@@ -35,6 +35,8 @@ export default function HotelsSearchPage() {
     setSearchParams(params);
   };
 
+  console.log(searchHotelsError);
+
   const errorMessage =
     searchHotelsError && getApiError(searchHotelsError as unknown);
 
