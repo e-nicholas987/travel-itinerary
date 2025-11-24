@@ -122,7 +122,7 @@ export default function SelectField({
                   onSearchChange?.(event.target.value);
                 }}
                 placeholder="Search..."
-                className="h-8 w-full rounded-sm border border-primary-1100 px-2 text-xs text-black outline-none transition-shadow focus:border-primary-600 focus:bg-white focus:ring-2 focus:ring-primary-600/30"
+                className="h-11 w-full rounded-sm border border-primary-1100 px-2  text-black outline-none transition-shadow focus:border-primary-600 focus:bg-white focus:ring-2 focus:ring-primary-600/30"
               />
             </div>
           )}
@@ -132,7 +132,7 @@ export default function SelectField({
               Loading...
             </div>
           ) : filteredOptions.length === 0 && emptyStateText ? (
-            <div className="px-4 py-3 text-black-secondary text-center text-sm">
+            <div className="px-4 py-8 text-black-secondary text-center text-sm">
               {emptyStateText}
             </div>
           ) : (

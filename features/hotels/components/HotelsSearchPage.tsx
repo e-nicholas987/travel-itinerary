@@ -63,7 +63,7 @@ export default function HotelsSearchPage() {
         isLoadingHotels={isLoadingHotels}
       />
 
-      {isLoadingHotels && !hotelsResponse?.data && (
+      {!hotelsResponse?.data && isLoadingHotels && (
         <div className="mt-4">
           <ResultsLoader message="Searching for hotels..." />
         </div>

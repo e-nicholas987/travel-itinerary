@@ -151,9 +151,9 @@ export default function HotelsSearchForm({
   return (
     <form
       onSubmit={onSubmit}
-      className="mb-8 rounded-sm bg-neutral-300 p-4 sm:p-5 lg:p-6"
+      className="mb-8 rounded-sm bg-white sm:bg-neutral-300 sm:p-5 lg:p-6"
     >
-      <div className="space-y-5 sm:space-y-6">
+      <div className="sm:space-y-6">
         <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
           <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
             <h3 className="text-sm font-semibold text-black-primary">
