@@ -37,11 +37,7 @@ export default function InputField({
           id={id}
           {...props}
           className={cn(
-            "placeholder:text-black-secondary  bg-white focus:ring-primary-600/30 focus:border-primary-600 focus:shadow-primary-600 h-12 w-full rounded-sm border border-primary-1100 py-2 p-4 text-black outline-none transition-shadow placeholder:text-sm focus:border focus:bg-white focus:ring-2",
-            {
-              "[[type='date']]:text-sm [[type='date']]:text-black-secondary":
-                !props.value,
-            },
+            "placeholder:text-black-secondary  bg-white focus:ring-primary-600/30 focus:border-primary-600 focus:shadow-primary-600 h-12 w-full rounded-sm border border-primary-1100 py-2 p-4 text-black outline-none transition-shadow placeholder:text-sm focus:border focus:bg-white [type='date']]:text-sm focus:ring-2",
             inputClassName
           )}
         />
