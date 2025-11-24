@@ -7,6 +7,7 @@ import RemoveItineraryButton from "@/components/shared/RemoveItineraryButton";
 import { useLocalStorage } from "@/hooks";
 import { HOTELS_ITINERARY_STORAGE_KEY } from "@/constants/storageKeys";
 import { cn } from "@/lib/utils";
+import { Calendar, MapPin } from "lucide-react";
 
 type HotelCardProps = {
   hotel: SearchHotelsHotel;
@@ -100,7 +101,12 @@ export default function HotelCard({
                   {shortLabel}
                 </p>
               )}
-              <div className="mt-2 flex flex-wrap items-center gap-3 text-sm font-medium text-black-secondary">
+
+              <div className="mt-1 flex flex-wrap items-center gap-3 font-medium text-black-secondary">
+                <div className="flex gap-1 text-primary-600">
+                  <MapPin size={18} />
+                  <span className="leading-tight">Directions</span>
+                </div>
                 <span className="inline-flex items-center gap-1">
                   <StarIcon className="text-[#F4B93E]" />
                   {typeof reviewScore === "number"
@@ -111,7 +117,7 @@ export default function HotelCard({
                   )}
                   {typeof reviewCount === "number" && (
                     <span className="leading-none">
-                      ({reviewCount} reviews)
+                      ({reviewCount.toLocaleString()} reviews)
                     </span>
                   )}
                 </span>
@@ -136,34 +142,35 @@ export default function HotelCard({
             </div>
           </header>
 
-          <section className="mt-2 border-y border-neutral-200 pl-4 pr-10 py-3.5 text-sm font-medium text-black-secondary">
+          <section className="mt-2 flex items-center justify-between border-y border-neutral-200 pl-4 pr-10 py-3.5 text-sm font-medium text-black-secondary">
             <div className="flex flex-wrap items-center gap-4">
-              <div>
+              <div className="text-sm 2xl:text-[1.125rem]">
                 <span className="text-black-secondary">Facilities:</span>{" "}
                 <span className="text-black-primary">Pool</span>
                 <span className="mx-1">•</span>
                 <span className="text-black-primary">Bar</span>
               </div>
             </div>
-            <div className="mt-2 flex flex-wrap items-center gap-6 text-xs">
-              <span>
-                Check-in:{" "}
-                <span className="font-semibold text-black-primary">
-                  {checkinDate || "-"}
+            <div className="flex flex-wrap items-center gap-6 text-xs">
+              <div className="flex items-center gap-2">
+                <Calendar size={20} className="text-neutral-800" />
+                <span className="text-black-secondary text-sm 2xl:text-[1.125rem] font-medium">
+                  Check-in: {checkinDate || "-"}
                 </span>
-              </span>
-              <span>
-                Check-out:{" "}
-                <span className="font-semibold text-black-primary">
-                  {checkoutDate || "-"}
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Calendar size={20} className="text-neutral-800" />
+                <span className="text-black-secondary text-sm 2xl:text-[1.125rem] font-medium">
+                  Check-out: {checkoutDate || "-"}
                 </span>
-              </span>
+              </div>
             </div>
           </section>
 
           <footer className="mt-2 flex items-center justify-between pl-4 pr-10">
             {!isSearchResult && (
-              <div className="flex gap-4 text-[1.125rem] font-semibold text-primary-600">
+              <div className="flex gap-4 text-sm 2xl:text-[1.125rem] font-semibold text-primary-600">
                 <button type="button" className="hover:underline">
                   Hotel details
                 </button>

@@ -50,8 +50,6 @@ export default function SelectField({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  console.log(id, error);
-
   useEffect(() => {
     if (!isOpen || !inputRef.current) {
       return;

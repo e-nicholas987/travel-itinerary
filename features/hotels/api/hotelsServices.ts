@@ -12,10 +12,10 @@ import type {
 import buildQueryString from "@/lib/utils/buildQueryString";
 
 export const searchHotels = async (
-  params: SearchHotelsParams
+  params?: SearchHotelsParams
 ): Promise<SearchHotelsResponse> => {
   const { data } = await apiClient.get(
-    buildQueryString(API_ROUTES.hotels.searchHotels, params)
+    buildQueryString(API_ROUTES.hotels.searchHotels, params ?? {})
   );
 
   return data;

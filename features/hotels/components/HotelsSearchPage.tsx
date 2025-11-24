@@ -13,29 +13,22 @@ import ErrorBanner from "@/components/shared/ErrorBanner";
 import PageHeaderWithBack from "@/components/shared/PageHeader";
 
 export default function HotelsSearchPage() {
-  const [searchParams, setSearchParams] = useState<SearchHotelsParams | null>(
-    null
-  );
+  const [searchParams, setSearchParams] = useState<
+    SearchHotelsParams | undefined
+  >(undefined);
 
   const {
     data: hotelsResponse,
     isLoading: isLoadingHotels,
     error: searchHotelsError,
   } = useSearchHotels({
-    params: searchParams ?? {
-      dest_id: -2092174,
-      search_type: "CITY",
-      arrival_date: "",
-      departure_date: "",
-    },
-    enabled: !!searchParams,
+    params: searchParams,
+    enabled: !!searchParams?.dest_id,
   });
 
   const handleSearch = (params: SearchHotelsParams) => {
     setSearchParams(params);
   };
-
-  console.log(searchHotelsError);
 
   const errorMessage =
     searchHotelsError && getApiError(searchHotelsError as unknown);

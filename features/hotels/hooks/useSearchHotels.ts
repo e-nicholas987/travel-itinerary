@@ -7,7 +7,7 @@ export const useSearchHotels = ({
   params,
   enabled,
 }: {
-  params: SearchHotelsParams;
+  params?: SearchHotelsParams;
   enabled: boolean;
 }) =>
   useQuery({

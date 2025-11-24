@@ -141,7 +141,7 @@ export default function ActivitiesCard({
           <footer className="mt-2 pl-4 pr-10 flex items-center justify-between">
             {!isSearchResult && (
               <>
-                <div className="flex gap-4 text-[1.125rem] font-semibold text-primary-600">
+                <div className="flex gap-4 text-sm 2xl:text-[1.125rem] font-semibold text-primary-600">
                   <button type="button" className="hover:underline">
                     Activity details
                   </button>
@@ -152,7 +152,7 @@ export default function ActivitiesCard({
 
                 <button
                   type="button"
-                  className="text-primary-600 hover:underline text-[1.125rem] font-medium"
+                  className="text-primary-600 hover:underline text-sm 2xl:text-[1.125rem] font-medium"
                 >
                   Edit details
                 </button>

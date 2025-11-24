@@ -206,6 +206,7 @@ export default function HotelsSearchForm({
           label="Check-in"
           type="date"
           {...register("arrival_date")}
+          isRequired
           error={errors.arrival_date?.message}
         />
         <InputField
@@ -213,6 +214,7 @@ export default function HotelsSearchForm({
           label="Check-out"
           type="date"
           {...register("departure_date")}
+          isRequired
           error={errors.departure_date?.message}
         />
       </div>
