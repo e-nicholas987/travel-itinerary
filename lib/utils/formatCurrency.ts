@@ -22,5 +22,3 @@ export function formatCurrency({
     return `${currency} ${amount.toFixed(maximumFractionDigits)}`;
   }
 }
-
-

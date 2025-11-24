@@ -4,6 +4,7 @@ import "./globals.css";
 import Topbar from "@/components/layout/topbar/Topbar";
 import Sidebar from "@/components/layout/Sidebar";
 import QueryProvider from "@/providers/QueryProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
         <QueryProvider>
+          <Toaster />
           <header className="h-(--topbar-height) fixed bg-white top-0 z-10 inset-x-0">
             <Topbar />
           </header>
