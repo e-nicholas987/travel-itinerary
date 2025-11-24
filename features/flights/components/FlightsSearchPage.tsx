@@ -7,6 +7,8 @@ import { ROUTES } from "@/constants/routes";
 import ErrorBanner from "@/components/shared/ErrorBanner";
 import PageHeaderWithBack from "@/components/shared/PageHeader";
 import ResultsHeader from "@/components/shared/ResultsHeader";
+import EmptyResultsState from "@/components/shared/EmptyResultsState";
+import ResultsLoader from "@/components/shared/ResultsLoader";
 import { getApiError } from "@/lib/utils/getApiError";
 
 import type { SearchFlightsParams, SearchFlightsResponse } from "../types";
@@ -72,6 +74,12 @@ export default function FlightsSearchPage() {
         isLoadingFlights={isFetchingFlights}
       />
 
+      {isFetchingFlights && !flightsResponse?.data && (
+        <div className="mt-4">
+          <ResultsLoader message="Searching for flights..." />
+        </div>
+      )}
+
       {flightsResponse?.data && (
         <section ref={scrollIntoViewRef} className="space-y-4">
           <ResultsHeader
@@ -81,14 +89,10 @@ export default function FlightsSearchPage() {
           />
 
           {!flightsResponse.data?.flightOffers?.length ? (
-            <div className="flex flex-col items-center justify-center rounded-sm border border-dashed border-neutral-300 bg-neutral-100 px-6 py-10 text-center">
-              <p className="text-sm font-semibold text-black-primary">
-                No flights found for your current filters.
-              </p>
-              <p className="mt-1 text-xs font-medium text-black-secondary">
-                Try adjusting your dates, route, or filters to see more options.
-              </p>
-            </div>
+            <EmptyResultsState
+              title="No flights found for your current filters."
+              description="Try adjusting your dates, route, or filters to see more options."
+            />
           ) : (
             <div className="space-y-3">
               {flightsResponse.data.flightOffers.map((offer) => (

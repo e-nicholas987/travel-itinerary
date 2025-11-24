@@ -9,6 +9,8 @@ import { useSearchHotels } from "@/features/hotels/hooks/useSearchHotels";
 import ErrorBanner from "@/components/shared/ErrorBanner";
 import PageHeaderWithBack from "@/components/shared/PageHeader";
 import ResultsHeader from "@/components/shared/ResultsHeader";
+import EmptyResultsState from "@/components/shared/EmptyResultsState";
+import ResultsLoader from "@/components/shared/ResultsLoader";
 import HotelCard from "@/features/hotels/components/HotelCard";
 import HotelsSearchForm from "@/features/hotels/components/HotelsSearchForm";
 import { getApiError } from "@/lib/utils/getApiError";
@@ -61,6 +63,12 @@ export default function HotelsSearchPage() {
         isLoadingHotels={isLoadingHotels}
       />
 
+      {isLoadingHotels && !hotelsResponse?.data && (
+        <div className="mt-4">
+          <ResultsLoader message="Searching for hotels..." />
+        </div>
+      )}
+
       {hotelsResponse?.data && (
         <section ref={scrollIntoViewRef} className="space-y-4">
           <ResultsHeader
@@ -70,15 +78,10 @@ export default function HotelsSearchPage() {
           />
 
           {hotelsResponse.data.hotels.length === 0 ? (
-            <div className="flex flex-col items-center justify-center rounded-sm border border-dashed border-neutral-300 bg-neutral-100 px-6 py-10 text-center">
-              <p className="text-sm font-semibold text-black-primary">
-                No hotels found for your current filters.
-              </p>
-              <p className="mt-1 text-xs font-medium text-black-secondary">
-                Try adjusting your dates, destination, or filters to see more
-                options.
-              </p>
-            </div>
+            <EmptyResultsState
+              title="No hotels found for your current filters."
+              description="Try adjusting your dates, destination, or filters to see more options."
+            />
           ) : (
             <div className="space-y-3">
               {hotelsResponse.data.hotels.map((hotel) => (

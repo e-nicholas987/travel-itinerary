@@ -184,7 +184,7 @@ export default function FlightCard({
           </div>
 
           <div className="mt-4 md:mt-0 text-right min-w-[120px]">
-            <p className="text-xl sm:text-2xl font-bold text-black-primary">
+            <p className="text-xl sm:text-[1.75rem] text-black-primary font-semibold">
               {formattedPrice}
             </p>
           </div>
