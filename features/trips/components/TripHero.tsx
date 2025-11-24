@@ -65,14 +65,14 @@ export default function TripHero() {
           <button
             type="button"
             aria-label="add user"
-            className="text-primary-600 hover:bg-primary-600 hover:text-white transition-colors duration-300 grid place-items-center rounded-sm w-full sm:w-40 bg-primary-100 h-10 sm:h-11.5"
+            className="text-primary-600 cursor-pointer hover:bg-primary-600 hover:text-white transition-colors duration-300 grid place-items-center rounded-sm w-full sm:w-40 bg-primary-100 h-10 sm:h-11.5"
           >
             <UserPlusIcon />
           </button>
           <button
             type="button"
             aria-label="open menu"
-            className="grid place-items-center hover:bg-primary-600 hover:text-white transition-colors duration-300 rounded-sm w-10 h-10 sm:w-11.5 sm:h-11.5"
+            className="grid cursor-pointer place-items-center hover:bg-primary-600 hover:text-white transition-colors duration-300 rounded-sm w-10 h-10 sm:w-11.5 sm:h-11.5"
           >
             <DotsThreeIcon />
           </button>
