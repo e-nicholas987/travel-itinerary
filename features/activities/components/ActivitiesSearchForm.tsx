@@ -23,18 +23,13 @@ import type {
   SearchAttractionsResponse,
   SortBy,
 } from "../types";
+import { ACTIVITIES_SORT_OPTIONS } from "../constants/selectOptions";
 
 type ActivitiesSearchFormProps = {
   onSearch: (params: SearchAttractionsParams) => void;
   isLoadingLocations: boolean;
   locations?: SearchAttractionsResponse;
 };
-
-const sortOptions: SelectOption[] = [
-  { label: "Trending", value: "trending" },
-  { label: "Best booking score", value: "attr_book_score" },
-  { label: "Lowest price", value: "lowest_price" },
-];
 
 const defaultValues: ActivitiesSearchFormValues = {
   id: "",
@@ -189,7 +184,7 @@ export default function ActivitiesSearchForm({
                 placeholder="Select sort by"
                 value={field.value}
                 onChange={field.onChange}
-                options={sortOptions}
+                options={ACTIVITIES_SORT_OPTIONS}
                 containerClassName="md:flex-[2]"
               />
             )}

@@ -12,8 +12,8 @@ export const API_ROUTES = {
   },
 
   flights: {
-    searchFlights: "/flight/searchFlights",
-    searchFlightDestination: "/flight/searchDestination",
+    searchFlights: "/flights/searchFlights",
+    searchFlightDestination: "/flights/searchDestination",
   },
 
   meta: {

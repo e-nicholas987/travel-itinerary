@@ -17,31 +17,16 @@ import {
   type FlightsSearchFormValues,
 } from "../validation/flightsSearchSchema";
 import CurrencyField from "@/components/shared/CurrencyField";
+import {
+  FLIGHTS_CABIN_CLASS_OPTIONS,
+  FLIGHTS_SORT_OPTIONS,
+  FLIGHTS_STOPS_OPTIONS,
+} from "../constants/selectOptions";
 
 type FlightsSearchFormProps = {
   onSearch: (params: SearchFlightsParams) => void;
   isLoadingFlights: boolean;
 };
-
-const cabinClassOptions: SelectOption[] = [
-  { label: "Economy", value: "ECONOMY" },
-  { label: "Premium economy", value: "PREMIUM_ECONOMY" },
-  { label: "Business", value: "BUSINESS" },
-  { label: "First", value: "FIRST" },
-];
-
-const sortOptions: SelectOption[] = [
-  { label: "Best", value: "BEST" },
-  { label: "Cheapest", value: "CHEAPEST" },
-  { label: "Fastest", value: "FASTEST" },
-];
-
-const stopsOptions: SelectOption[] = [
-  { label: "No preference", value: "none" },
-  { label: "Non-stop", value: "0" },
-  { label: "1 stop", value: "1" },
-  { label: "2 stops", value: "2" },
-];
 
 const defaultValues: FlightsSearchFormValues = {
   fromId: "",
@@ -200,6 +185,7 @@ export default function FlightsSearchForm({
             id="flights-adults"
             label="Adults"
             type="number"
+            inputMode="tel"
             min={1}
             placeholder="Number of adults"
             {...form.register("adults")}
@@ -208,7 +194,8 @@ export default function FlightsSearchForm({
           <InputField
             id="flights-children"
             label="Children"
-            type="text"
+            type="number"
+            inputMode="tel"
             placeholder="e.g. 0,5,12"
             {...form.register("children")}
             error={errors.children?.message}
@@ -223,7 +210,7 @@ export default function FlightsSearchForm({
                 placeholder="Any cabin"
                 value={field.value}
                 onChange={field.onChange}
-                options={cabinClassOptions}
+                options={FLIGHTS_CABIN_CLASS_OPTIONS}
                 error={errors.cabinClass?.message}
                 containerClassName="w-full"
               />
@@ -242,7 +229,7 @@ export default function FlightsSearchForm({
                 placeholder="Best"
                 value={field.value}
                 onChange={field.onChange}
-                options={sortOptions}
+                options={FLIGHTS_SORT_OPTIONS}
                 error={errors.sort?.message}
                 containerClassName="w-full"
               />
@@ -258,7 +245,7 @@ export default function FlightsSearchForm({
                 placeholder="No preference"
                 value={field.value}
                 onChange={field.onChange}
-                options={stopsOptions}
+                options={FLIGHTS_STOPS_OPTIONS}
                 error={errors.stops?.message}
                 containerClassName="w-full"
               />

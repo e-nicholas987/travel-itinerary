@@ -69,11 +69,11 @@ export default function FlightsSearchPage() {
         <section className="space-y-4">
           <ResultsHeader
             title="Available flights"
-            count={flightsResponse.data.flightOffers.length}
+            count={flightsResponse.data?.flightOffers.length}
             label="options"
           />
 
-          {flightsResponse.data.flightOffers.length === 0 ? (
+          {!flightsResponse.data?.flightOffers?.length ? (
             <div className="flex flex-col items-center justify-center rounded-sm border border-dashed border-neutral-300 bg-neutral-100 px-6 py-10 text-center">
               <p className="text-sm font-semibold text-black-primary">
                 No flights found for your current filters.

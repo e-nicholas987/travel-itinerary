@@ -14,21 +14,15 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { capitalizeFirstLetter } from "@/lib/utils/stringHelper";
+import {
+  HOTELS_TEMPERATURE_UNIT_OPTIONS,
+  HOTELS_UNIT_OPTIONS,
+} from "../constants/selectOptions";
 
 type HotelsSearchFormProps = {
   onSearch: (params: SearchHotelsParams) => void;
   isLoadingHotels: boolean;
 };
-
-const unitOptions = [
-  { label: "Metric", value: "metric" },
-  { label: "Imperial", value: "imperial" },
-];
-
-const temperatureUnitOptions = [
-  { label: "Celsius (°C)", value: "c" },
-  { label: "Fahrenheit (°F)", value: "f" },
-];
 
 export default function HotelsSearchForm({
   onSearch,
@@ -224,6 +218,7 @@ export default function HotelsSearchForm({
           id="hotels-adults"
           label="Adults"
           type="number"
+          inputMode="tel"
           min={1}
           placeholder="Enter number of adults"
           {...register("adults")}
@@ -242,6 +237,7 @@ export default function HotelsSearchForm({
           id="hotels-room-qty"
           label="Rooms"
           type="number"
+          inputMode="tel"
           min={1}
           placeholder="Enter number of rooms"
           {...register("room_qty")}
@@ -304,7 +300,7 @@ export default function HotelsSearchForm({
               placeholder="Select units"
               value={field.value}
               onChange={field.onChange}
-              options={unitOptions}
+              options={HOTELS_UNIT_OPTIONS}
               error={errors.units?.message}
             />
           )}
@@ -320,7 +316,7 @@ export default function HotelsSearchForm({
               placeholder="Select temperature unit"
               value={field.value}
               onChange={field.onChange}
-              options={temperatureUnitOptions}
+              options={HOTELS_TEMPERATURE_UNIT_OPTIONS}
               error={errors.temperature_unit?.message}
             />
           )}
