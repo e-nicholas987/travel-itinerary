@@ -12,6 +12,7 @@ import ResultsHeader from "@/components/shared/ResultsHeader";
 import HotelCard from "@/features/hotels/components/HotelCard";
 import HotelsSearchForm from "@/features/hotels/components/HotelsSearchForm";
 import { getApiError } from "@/lib/utils/getApiError";
+import useScrollIntoView from "@/hooks/useScrollIntoView";
 
 export default function HotelsSearchPage() {
   const [searchParams, setSearchParams] = useState<
@@ -27,6 +28,9 @@ export default function HotelsSearchPage() {
     params: searchParams,
     enabled: !!searchParams?.dest_id,
   });
+  const scrollIntoViewRef = useScrollIntoView<HTMLDivElement>(
+    hotelsResponse?.data?.hotels?.length ?? 0
+  );
 
   const handleSearch = (params: SearchHotelsParams) => {
     setSearchParams(params);
@@ -58,7 +62,7 @@ export default function HotelsSearchPage() {
       />
 
       {hotelsResponse?.data && (
-        <section className="space-y-4">
+        <section ref={scrollIntoViewRef} className="space-y-4">
           <ResultsHeader
             title="Available hotels"
             count={hotelsResponse.data.hotels.length}

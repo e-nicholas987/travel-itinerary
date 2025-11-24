@@ -13,6 +13,7 @@ import type { SearchFlightsParams, SearchFlightsResponse } from "../types";
 import { useSearchFlights } from "../hooks/useSearchFlights";
 import FlightsSearchForm from "./FlightsSearchForm";
 import FlightCard from "./FlightCard";
+import useScrollIntoView from "@/hooks/useScrollIntoView";
 
 export default function FlightsSearchPage() {
   const [searchParams, setSearchParams] = useState<SearchFlightsParams | null>(
@@ -32,6 +33,10 @@ export default function FlightsSearchPage() {
     },
     enabled: !!searchParams,
   });
+
+  const scrollIntoViewRef = useScrollIntoView<HTMLDivElement>(
+    flightsResponse?.data?.flightOffers?.length ?? 0
+  );
 
   const handleSearch = (params: SearchFlightsParams) => {
     setSearchParams(params);
@@ -68,7 +73,7 @@ export default function FlightsSearchPage() {
       />
 
       {flightsResponse?.data && (
-        <section className="space-y-4">
+        <section ref={scrollIntoViewRef} className="space-y-4">
           <ResultsHeader
             title="Available flights"
             count={flightsResponse.data?.flightOffers?.length}

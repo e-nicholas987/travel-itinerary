@@ -70,7 +70,10 @@ function SelectContent({
       >
         {!hideTopScrollbar && <SelectScrollUpButton />}
         <SelectPrimitive.Viewport
-          className={cn("w-full min-w-(--radix-select-trigger-width) p-1")}
+          className={cn(
+            "w-full min-w-(--radix-select-trigger-width) p-1",
+            hideTopScrollbar && "pt-0"
+          )}
         >
           {children}
         </SelectPrimitive.Viewport>

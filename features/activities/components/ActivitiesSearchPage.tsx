@@ -12,6 +12,7 @@ import ResultsHeader from "@/components/shared/ResultsHeader";
 import ActivitiesCard from "./ActivitiesCard";
 import ActivitiesSearchForm from "./ActivitiesSearchForm";
 import { getApiError } from "@/lib/utils/getApiError";
+import useScrollIntoView from "@/hooks/useScrollIntoView";
 
 export default function ActivitiesSearchPage() {
   const [searchParams, setSearchParams] =
@@ -27,6 +28,9 @@ export default function ActivitiesSearchPage() {
     },
     enabled: !!searchParams,
   });
+  const scrollIntoViewRef = useScrollIntoView<HTMLDivElement>(
+    locations?.data?.products?.length ?? 0
+  );
 
   const handleSearch = (params: SearchAttractionsParams) => {
     setSearchParams(params);
@@ -59,7 +63,7 @@ export default function ActivitiesSearchPage() {
       />
 
       {locations?.data && (
-        <section className="space-y-4">
+        <section ref={scrollIntoViewRef} className="space-y-4">
           <ResultsHeader
             title="Available activities"
             count={locations.data.products.length}

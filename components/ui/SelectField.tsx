@@ -114,7 +114,7 @@ export default function SelectField({
 
           <SelectContent hideTopScrollbar={enableSearch} className="pt-0">
             {enableSearch && (
-              <div className="border-b z-10 sticky top-0 bg-white border-neutral-200 px-2 pb-2 pt-2">
+              <div className="sticky top-0 z-10 border-b border-neutral-200 bg-white px-2 pb-2 pt-2">
                 <input
                   ref={inputRef}
                   type="text"
