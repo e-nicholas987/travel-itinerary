@@ -100,13 +100,15 @@ export default function Topbar() {
         </Link>
 
         <div className="flex items-center gap-6 justify-self-end lg:justify-self-auto">
-          {UTILITY_NAV_ITEMS.map((item) => (
-            <TopbarNavItem
-              key={item.href}
-              item={item}
-              labelClassName="hidden min-w-[1500px]:block"
-            />
-          ))}
+          <div className="hidden sm:flex-gap-6">
+            {UTILITY_NAV_ITEMS.map((item) => (
+              <TopbarNavItem
+                key={item.href}
+                item={item}
+                labelClassName="hidden min-w-[1500px]:block"
+              />
+            ))}
+          </div>
 
           <button
             type="button"

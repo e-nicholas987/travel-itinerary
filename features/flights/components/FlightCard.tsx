@@ -50,19 +50,6 @@ export default function FlightCard({
     return false;
   });
 
-  const handleToggleItinerary = () => {
-    const stored = getItem<FlightOffer[]>(FLIGHTS_ITINERARY_STORAGE_KEY) ?? [];
-    const exists = stored.some((item) => item.token === offer.token);
-    const updated = exists
-      ? stored.filter((item) => item.token !== offer.token)
-      : [...stored, offer];
-
-    const success = setItem(FLIGHTS_ITINERARY_STORAGE_KEY, updated);
-    if (success) {
-      setIsInItinerary(!exists);
-    }
-  };
-
   const firstSegment = offer.segments[0];
   const firstLeg = firstSegment?.legs[0];
 
@@ -78,6 +65,19 @@ export default function FlightCard({
   const departureDate = new Date(firstSegment.departureTime);
   const arrivalDate = new Date(firstSegment.arrivalTime);
 
+  const totalPrice = offer.priceBreakdown.total;
+  const formattedPrice = formatCurrency({
+    amount: totalPrice.units + totalPrice.nanos / 1_000_000_000,
+    currency: totalPrice.currencyCode,
+  });
+
+  const isDirect = firstSegment.legs.length === 1;
+  const stopsLabel = isDirect
+    ? "Direct"
+    : `${firstSegment.legs.length - 1} Stop${
+        firstSegment.legs.length - 1 > 1 ? "s" : ""
+      }`;
+
   const formatTime = (date: Date) =>
     date.toLocaleTimeString("en-GB", {
       hour: "2-digit",
@@ -92,18 +92,18 @@ export default function FlightCard({
       month: "short",
     });
 
-  const totalPrice = offer.priceBreakdown.total;
-  const formattedPrice = formatCurrency({
-    amount: totalPrice.units + totalPrice.nanos / 1_000_000_000,
-    currency: totalPrice.currencyCode,
-  });
+  const handleToggleItinerary = () => {
+    const stored = getItem<FlightOffer[]>(FLIGHTS_ITINERARY_STORAGE_KEY) ?? [];
+    const exists = stored.some((item) => item.token === offer.token);
+    const updated = exists
+      ? stored.filter((item) => item.token !== offer.token)
+      : [...stored, offer];
 
-  const isDirect = firstSegment.legs.length === 1;
-  const stopsLabel = isDirect
-    ? "Direct"
-    : `${firstSegment.legs.length - 1} Stop${
-        firstSegment.legs.length - 1 > 1 ? "s" : ""
-      }`;
+    const success = setItem(FLIGHTS_ITINERARY_STORAGE_KEY, updated);
+    if (success) {
+      setIsInItinerary(!exists);
+    }
+  };
 
   return (
     <article
