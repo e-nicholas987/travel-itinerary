@@ -57,7 +57,7 @@ export type SearchAttractionLocationResponse = {
 
 export type SortBy = "trending" | "attr_book_score" | "lowest_price";
 
-export type SearchAttractionsParams = {
+export interface SearchAttractionsParams {
   id: string;
   startDate?: string;
   endDate?: string;
@@ -69,7 +69,7 @@ export type SearchAttractionsParams = {
   priceFilters?: string;
   ufiFilters?: string;
   labelFilters?: string;
-};
+}
 
 export type AttractionsPrice = {
   __typename: "AttractionsPrice";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { BuildingsIcon } from "@/components/ui/icons";
 import { ROUTES } from "@/constants/routes";
@@ -33,8 +33,12 @@ export default function HotelsSearchPage() {
     setParams(params);
   };
 
-  const errorMessage =
-    searchHotelsError && getApiError(searchHotelsError as unknown);
+  const errorMessage = useMemo(() => {
+    if (hotelsResponse?.message.includes("error")) {
+      return hotelsResponse?.message;
+    }
+    return searchHotelsError && getApiError(searchHotelsError as unknown);
+  }, [hotelsResponse?.message, searchHotelsError]);
 
   return (
     <section className="flex-1 rounded-sm bg-white p-8">

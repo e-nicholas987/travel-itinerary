@@ -1,25 +1,23 @@
 import React, { useMemo } from "react";
+import { useFormContext } from "react-hook-form";
+
 import { FilterGroup } from "./FilterGroup";
 import { SearchAttractionsResponse } from "../types";
-import { useRouteQueryParams } from "@/hooks";
+import type { ActivitiesSearchFormValues } from "../validation/activitiesSearchSchema";
 
-export default function AdvancedFilters({
-  response,
-}: {
+type AdvancedFiltersProps = {
   response: SearchAttractionsResponse | undefined;
-}) {
-  const { setParams, getAllParams } = useRouteQueryParams();
+};
 
-  const toggleFilter = (key: string, value: string) => {
-    const current = getAllParams(key) ?? [];
-    const exists = current.includes(value);
-    const next = exists
-      ? current.filter((item) => item !== value)
-      : [...current, value];
-    setParams({ [key]: next });
-  };
+export default function AdvancedFilters({ response }: AdvancedFiltersProps) {
+  const { watch, setValue } = useFormContext<ActivitiesSearchFormValues>();
 
-  const activityTypeFilters = useMemo(() => {
+  const typeFilters = watch("typeFilters") ?? [];
+  const priceFilters = watch("priceFilters") ?? [];
+  const ufiFilters = watch("ufiFilters") ?? [];
+  const labelFilters = watch("labelFilters") ?? [];
+
+  const activityTypeFilterOptions = useMemo(() => {
     return (
       response?.data?.filterOptions?.typeFilters?.map((filter) => ({
         label: filter.name,
@@ -28,7 +26,7 @@ export default function AdvancedFilters({
     );
   }, [response?.data?.filterOptions?.typeFilters]);
 
-  const priceFilters = useMemo(() => {
+  const priceFilterOptions = useMemo(() => {
     return (
       response?.data?.filterOptions?.priceFilters?.map((filter) => ({
         label: filter.name,
@@ -37,7 +35,7 @@ export default function AdvancedFilters({
     );
   }, [response?.data?.filterOptions?.priceFilters]);
 
-  const ufiFilters = useMemo(() => {
+  const ufiFilterOptions = useMemo(() => {
     return (
       response?.data?.filterOptions?.ufiFilters?.map((filter) => ({
         label: filter.name,
@@ -46,7 +44,7 @@ export default function AdvancedFilters({
     );
   }, [response?.data?.filterOptions?.ufiFilters]);
 
-  const labelFilters = useMemo(() => {
+  const labelFilterOptions = useMemo(() => {
     return (
       response?.data?.filterOptions?.labelFilters?.map((filter) => ({
         label: filter.name,
@@ -55,41 +53,53 @@ export default function AdvancedFilters({
     );
   }, [response?.data?.filterOptions?.labelFilters]);
 
+  const handleToggle = (
+    key: keyof ActivitiesSearchFormValues,
+    value: string
+  ) => {
+    const current = (watch(key) as string[] | undefined) ?? [];
+    const exists = current.includes(value);
+    const next = exists
+      ? current.filter((item) => item !== value)
+      : [...current, value];
+    setValue(key, next);
+  };
+
   return (
     <div
       id="activities-advanced-filters"
       className="mt-4 grid gap-4 border-t border-neutral-500/40 pt-4 md:grid-cols-2"
     >
-      {Boolean(activityTypeFilters.length) && (
+      {Boolean(activityTypeFilterOptions.length) && (
         <FilterGroup
           label="Activity type"
-          options={activityTypeFilters}
-          selected={getAllParams("type") ?? []}
-          onToggle={(value) => toggleFilter("type", value)}
+          options={activityTypeFilterOptions}
+          selected={typeFilters}
+          onToggle={(value) => handleToggle("typeFilters", value)}
         />
       )}
-      {Boolean(priceFilters.length) && (
+      {Boolean(priceFilterOptions.length) && (
         <FilterGroup
           label="Price range"
-          options={priceFilters}
-          selected={getAllParams("price") ?? []}
-          onToggle={(value) => toggleFilter("price", value)}
+          options={priceFilterOptions}
+          selected={priceFilters}
+          onToggle={(value) => handleToggle("priceFilters", value)}
         />
       )}
-      {Boolean(ufiFilters.length) && (
+      {Boolean(ufiFilterOptions.length) && (
         <FilterGroup
           label="Area"
-          options={ufiFilters}
-          selected={getAllParams("ufi") ?? []}
-          onToggle={(value) => toggleFilter("ufi", value)}
+          options={ufiFilterOptions}
+          selected={ufiFilters}
+          onToggle={(value) => handleToggle("ufiFilters", value)}
         />
       )}
-      {Boolean(labelFilters.length) && (
+      {Boolean(labelFilterOptions.length) && (
         <FilterGroup
           label="Labels"
-          options={labelFilters}
-          selected={getAllParams("label") ?? []}
-          onToggle={(value) => toggleFilter("label", value)}
+          options={labelFilterOptions}
+          selected={labelFilters}
+          onToggle={(value) => handleToggle("labelFilters", value)}
         />
       )}
     </div>

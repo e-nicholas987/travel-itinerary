@@ -1,17 +1,20 @@
-import { useRouteQueryParams } from "@/hooks";
 import { useCurrencies } from "@/queries";
 import { SelectField } from "../ui";
 
-export default function CurrencyField() {
+type CurrencyFieldProps = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+export default function CurrencyField({ value, onChange }: CurrencyFieldProps) {
   const { data: currencies, isLoading: isLoadingCurrencies } = useCurrencies();
-  const { setParams, getParam } = useRouteQueryParams();
   return (
     <SelectField
       id="activities-currency"
       label="Currency"
       placeholder="Select currency"
-      value={getParam("currencyCode")}
-      onChange={(value) => setParams({ currencyCode: value })}
+      value={value}
+      onChange={onChange}
       options={
         currencies?.data
           ? currencies.data.map((currency) => ({

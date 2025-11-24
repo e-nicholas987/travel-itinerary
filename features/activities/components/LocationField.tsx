@@ -1,15 +1,18 @@
-"use client";
+ "use client";
 
 import { useMemo, useState } from "react";
 import { SelectField } from "@/components/ui";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useRouteQueryParams } from "@/hooks/useRouteQueryParams";
 import { useSearchAttractionLocation } from "../hooks/useSearchAttractionLocation";
 import type { SelectOption } from "@/types/common";
 
-export default function LocationField() {
+type LocationFieldProps = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+export default function LocationField({ value, onChange }: LocationFieldProps) {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const { getParam, setParams } = useRouteQueryParams();
   const debouncedLocation = useDebounce(searchTerm, 500);
 
   const { data: locations, isLoading: isLoadingLocations } =
@@ -35,8 +38,8 @@ export default function LocationField() {
         searchValue={searchTerm}
         onSearchChange={setSearchTerm}
         options={options}
-        value={getParam("locationId")}
-        onChange={(value) => setParams({ locationId: value })}
+        value={value}
+        onChange={onChange}
         isLoading={isLoadingLocations}
         emptyStateText={
           !searchTerm ? "Please enter a location" : "No locations found."

@@ -32,7 +32,7 @@ export default function InputField({
         className={!label ? "sr-only" : undefined}
       />
 
-      <div className="relative w-full h-full">
+      <div className="relative w-full h-fit">
         <input
           id={id}
           {...props}

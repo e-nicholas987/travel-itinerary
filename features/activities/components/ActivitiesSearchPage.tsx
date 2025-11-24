@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { ListChecksIcon } from "@/components/ui/icons";
 import { ROUTES } from "@/constants/routes";
@@ -30,8 +30,12 @@ export default function ActivitiesSearchPage() {
     setSearchParams(params);
   };
 
-  const errorMessage =
-    searchAttractionsError && getApiError(searchAttractionsError);
+  const errorMessage = useMemo(() => {
+    if (locations?.message.includes("error")) {
+      return locations?.message;
+    }
+    return searchAttractionsError && getApiError(searchAttractionsError);
+  }, [locations?.message, searchAttractionsError]);
 
   return (
     <section className="flex-1 rounded-sm bg-white p-8">

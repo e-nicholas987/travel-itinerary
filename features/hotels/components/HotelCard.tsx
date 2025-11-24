@@ -76,12 +76,12 @@ export default function HotelCard({
 
   return (
     <article
-      className={cn("rounded-sm overflow-hidden", {
-        "grid grid-cols-[1fr_auto] shadow-sm border border-black-secondary ":
-          !isSearchResult,
-        "grid grid-cols-[1fr] shadow-sm border border-black-secondary ":
-          isSearchResult,
-      })}
+      className={cn(
+        "rounded-sm overflow-hidden",
+        !isSearchResult
+          ? "grid grid-cols-[1fr_auto] shadow-sm"
+          : " border border-neutral-200"
+      )}
     >
       <div className="flex bg-white p-6 pr-0">
         <ImageCarousel
