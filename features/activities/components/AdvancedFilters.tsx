@@ -10,6 +10,15 @@ export default function AdvancedFilters({
 }) {
   const { setParams, getAllParams } = useRouteQueryParams();
 
+  const toggleFilter = (key: string, value: string) => {
+    const current = getAllParams(key) ?? [];
+    const exists = current.includes(value);
+    const next = exists
+      ? current.filter((item) => item !== value)
+      : [...current, value];
+    setParams({ [key]: next });
+  };
+
   const activityTypeFilters = useMemo(() => {
     return (
       response?.data?.filterOptions?.typeFilters?.map((filter) => ({
@@ -56,9 +65,7 @@ export default function AdvancedFilters({
           label="Activity type"
           options={activityTypeFilters}
           selected={getAllParams("type") ?? []}
-          onToggle={(value) => {
-            setParams({ type: [value] });
-          }}
+          onToggle={(value) => toggleFilter("type", value)}
         />
       )}
       {Boolean(priceFilters.length) && (
@@ -66,9 +73,7 @@ export default function AdvancedFilters({
           label="Price range"
           options={priceFilters}
           selected={getAllParams("price") ?? []}
-          onToggle={(value) => {
-            setParams({ price: [value] });
-          }}
+          onToggle={(value) => toggleFilter("price", value)}
         />
       )}
       {Boolean(ufiFilters.length) && (
@@ -76,9 +81,7 @@ export default function AdvancedFilters({
           label="Area"
           options={ufiFilters}
           selected={getAllParams("ufi") ?? []}
-          onToggle={(value) => {
-            setParams({ ufi: [value] });
-          }}
+          onToggle={(value) => toggleFilter("ufi", value)}
         />
       )}
       {Boolean(labelFilters.length) && (
@@ -86,9 +89,7 @@ export default function AdvancedFilters({
           label="Labels"
           options={labelFilters}
           selected={getAllParams("label") ?? []}
-          onToggle={(value) => {
-            setParams({ label: [value] });
-          }}
+          onToggle={(value) => toggleFilter("label", value)}
         />
       )}
     </div>

@@ -11,7 +11,10 @@ import {
   ListChecksIcon,
 } from "@/components/ui/icons";
 import { ROUTES } from "@/constants/routes";
-import type { SortBy } from "@/features/activities/types";
+import type {
+  SortBy,
+  SearchAttractionsParams,
+} from "@/features/activities/types";
 
 import LocationField from "./LocationField";
 import { useRouteQueryParams } from "@/hooks";
@@ -23,24 +26,17 @@ import ActivitiesCard from "./ActivitiesCard";
 import { SORT_OPTIONS } from "../constants/selectOptions";
 
 export default function ActivitiesSearchPage() {
+  const [searchParams, setSearchParams] =
+    useState<SearchAttractionsParams | null>(null);
   const { setParams, getParam, getAllParams, clearAllParams } =
     useRouteQueryParams();
   const { data: languages, isLoading: isLoadingLanguages } = useLanguages();
   const { data: locations, isLoading: isLoadingLocations } =
     useSearchAttractions({
-      params: {
-        id: getParam("locationId") || "",
-        startDate: getParam("startDate") || "",
-        endDate: getParam("endDate") || "",
-        sortBy: getParam<SortBy>("sortBy"),
-        currency_code: getParam("currencyCode"),
-        languagecode: getParam("languagecode"),
-        typeFilters: getAllParams("type").join(","),
-        priceFilters: getAllParams("price").join(","),
-        ufiFilters: getAllParams("ufi").join(","),
-        labelFilters: getAllParams("label").join(","),
+      params: searchParams ?? {
+        id: "",
       },
-      enabled: Boolean(getParam("locationId")),
+      enabled: !!searchParams,
     });
 
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(true);
@@ -51,6 +47,25 @@ export default function ActivitiesSearchPage() {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
+
+    const params: SearchAttractionsParams = {
+      id: getParam("locationId") || "",
+      startDate: getParam("startDate") || undefined,
+      endDate: getParam("endDate") || undefined,
+      sortBy: getParam<SortBy>("sortBy") || undefined,
+      currency_code: getParam("currencyCode") || undefined,
+      languagecode: getParam("languageCode") || undefined,
+      typeFilters: getAllParams("type").join(",") || undefined,
+      priceFilters: getAllParams("price").join(",") || undefined,
+      ufiFilters: getAllParams("ufi").join(",") || undefined,
+      labelFilters: getAllParams("label").join(",") || undefined,
+    };
+
+    if (!params.id) {
+      return;
+    }
+
+    setSearchParams(params);
   };
 
   return (
@@ -187,11 +202,23 @@ export default function ActivitiesSearchPage() {
             </div>
           </header>
 
-          <div className="space-y-3">
-            {locations.data.products.map((item) => (
-              <ActivitiesCard key={item.id} activity={item} isSearchResult />
-            ))}
-          </div>
+          {locations.data.products.length === 0 ? (
+            <div className="flex flex-col items-center justify-center rounded-sm border border-dashed border-neutral-300 bg-neutral-100 px-6 py-10 text-center">
+              <p className="text-sm font-semibold text-black-primary">
+                No activities found for your current filters.
+              </p>
+              <p className="mt-1 text-xs font-medium text-black-secondary">
+                Try adjusting your dates, location, or filters to see more
+                options.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {locations.data.products.map((item) => (
+                <ActivitiesCard key={item.id} activity={item} isSearchResult />
+              ))}
+            </div>
+          )}
         </section>
       )}
     </section>

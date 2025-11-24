@@ -95,7 +95,7 @@ export default function SelectField({
 
       <div className="relative w-full h-full">
         <Select
-          value={value || undefined}
+          value={value ?? ""}
           defaultValue={defaultValue}
           onValueChange={handleValueChange}
           onOpenChange={handleOpenChange}
