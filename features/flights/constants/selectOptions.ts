@@ -19,3 +19,4 @@ export const FLIGHTS_STOPS_OPTIONS: SelectOption[] = [
   { label: "1 stop", value: "1" },
   { label: "2 stops", value: "2" },
 ];
+

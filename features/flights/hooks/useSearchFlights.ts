@@ -15,3 +15,4 @@ export const useSearchFlights = ({
     queryFn: () => searchFlights(params),
     enabled,
   });
+
