@@ -182,6 +182,11 @@ export default function HotelsSearchForm({
                   onSearchChange={setDestinationSearchTerm}
                   isLoading={isLoadingDestinations}
                   error={errors.dest_id?.message}
+                  emptyStateText={
+                    !destinationSearchTerm
+                      ? "Please enter a destination"
+                      : "No destinations found."
+                  }
                   containerClassName="w-full"
                 />
               )}

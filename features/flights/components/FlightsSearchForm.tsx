@@ -145,6 +145,11 @@ export default function FlightsSearchForm({
                     onSearchChange={setFromQuery}
                     isLoading={isLoadingFrom}
                     error={errors.fromId?.message}
+                    emptyStateText={
+                      !fromQuery
+                        ? "Please enter a departure airport or city"
+                        : "No departure airports or cities found."
+                    }
                     containerClassName="w-full"
                   />
                 )}
@@ -167,6 +172,11 @@ export default function FlightsSearchForm({
                     onSearchChange={setToQuery}
                     isLoading={isLoadingTo}
                     error={errors.toId?.message}
+                    emptyStateText={
+                      !toQuery
+                        ? "Please enter an arrival airport or city"
+                        : "No arrival airports or cities found."
+                    }
                     containerClassName="w-full"
                   />
                 )}
