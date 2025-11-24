@@ -5,9 +5,10 @@ export const API_ROUTES = {
   },
 
   hotels: {
-    searchHotelDestinations: "/hotel/searchDestinations",
+    searchHotelDestinations: "/hotels/searchDestination",
     getSortBy: "/hotels/getSortBy",
     getFilter: "/hotels/getFilter",
+    searchHotels: "/hotel/searchHotels",
   },
 
   flights: {

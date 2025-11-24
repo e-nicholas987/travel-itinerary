@@ -47,11 +47,7 @@ export default function InputField({
         />
         {icon && icon}
       </div>
-      {error && (
-        <p className="text-error-900 text-xs absolute bottom-0.5 right-0">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-red-700 text-xs mt-1">{error}</p>}
     </div>
   );
 }

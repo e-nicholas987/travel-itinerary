@@ -3,7 +3,10 @@
 import { useCallback } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-type RouteQueryUpdate = Record<string, string | string[] | null | undefined>;
+type RouteQueryUpdate = Record<
+  string,
+  string | string[] | number | null | undefined
+>;
 
 export const useRouteQueryParams = () => {
   const router = useRouter();

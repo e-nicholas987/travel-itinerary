@@ -8,13 +8,11 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@/components/ui/icons";
 
 type ImageCarouselProps = {
   images: string[];
-  alt: string;
   className?: string;
 };
 
 export default function ImageCarousel({
   images,
-  alt,
   className,
 }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -45,7 +43,7 @@ export default function ImageCarousel({
       {hasImages ? (
         <Image
           src={currentSrc}
-          alt={alt}
+          alt={currentSrc}
           fill
           className="object-cover"
           sizes="14.5rem"

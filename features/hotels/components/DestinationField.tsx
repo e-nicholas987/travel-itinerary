@@ -1,27 +1,33 @@
 "use client";
 
 import { useMemo, useState } from "react";
+
 import { SelectField } from "@/components/ui";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useRouteQueryParams } from "@/hooks/useRouteQueryParams";
-import { useSearchAttractionLocation } from "../hooks/useSearchAttractionLocation";
+import { useSearchHotelDestinations } from "../hooks/useSearchHotelDestinations";
 import type { SelectOption } from "@/types/common";
+import { SearchHotelDestinationsResponse } from "../types";
 
-export default function LocationField() {
+interface DestinationFieldProps {
+  destionationResponse: SearchHotelDestinationsResponse | undefined;
+}
+
+export default function DestinationField() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const { getParam, setParams } = useRouteQueryParams();
   const debouncedLocation = useDebounce(searchTerm, 500);
 
-  const { data: locations, isLoading: isLoadingLocations } =
-    useSearchAttractionLocation(debouncedLocation);
+  const { data: destinations, isLoading: isLoadingDestinations } =
+    useSearchHotelDestinations(debouncedLocation);
 
   const options: SelectOption[] = useMemo(
     () =>
-      locations?.data?.destinations?.map((destination) => ({
-        label: `${destination.cityName}, ${destination.country}`,
-        value: destination.id,
+      destinations?.data?.map((destination) => ({
+        label: destination.name,
+        value: destination.dest_id,
       })) ?? [],
-    [locations]
+    [destinations]
   );
 
   return (
@@ -35,9 +41,9 @@ export default function LocationField() {
         searchValue={searchTerm}
         onSearchChange={setSearchTerm}
         options={options}
-        value={getParam("locationId")}
-        onChange={(value) => setParams({ locationId: value })}
-        isLoading={isLoadingLocations}
+        value={getParam("id")}
+        onChange={(value) => setParams({ dest_id: value })}
+        isLoading={isLoadingDestinations}
         emptyStateText={
           !searchTerm ? "Please enter a location" : "No locations found."
         }

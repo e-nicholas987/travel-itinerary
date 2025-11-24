@@ -50,6 +50,8 @@ export default function SelectField({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  console.log(id, error);
+
   useEffect(() => {
     if (!isOpen || !inputRef.current) {
       return;
@@ -146,15 +148,7 @@ export default function SelectField({
           </SelectContent>
         </Select>
       </div>
-
-      {error && (
-        <p
-          id={`${id}-error`}
-          className="text-error-900 text-xs absolute bottom-0.5 right-0"
-        >
-          {error}
-        </p>
-      )}
+      {error && <p className="text-red-700 text-xs mt-1">{error}</p>}
     </div>
   );
 }

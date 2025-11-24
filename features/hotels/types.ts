@@ -85,3 +85,125 @@ export type SearchHotelsResponse = {
   timestamp: number;
   data?: SearchHotelsData;
 };
+
+export type SearchHotelsParams = {
+  dest_id: number;
+  search_type: string;
+  arrival_date: string;
+  departure_date: string;
+  adults?: number;
+  children_age?: string;
+  room_qty?: number;
+  price_min?: number;
+  price_max?: number;
+  sort_by?: string;
+  categories_filter?: string;
+  units?: "metric" | "imperial";
+  temperature_unit?: "c" | "f";
+  languagecode?: string;
+  currency_code?: string;
+  location?: string;
+};
+
+export type HotelDestination = {
+  dest_id: string;
+  search_type: string;
+  dest_type: string;
+  cc1: string;
+  type: string;
+  name: string;
+  hotels: number;
+  label: string;
+  lc: string;
+  nr_hotels: number;
+  latitude: number;
+  longitude: number;
+  image_url: string;
+  city_name: string;
+  roundtrip: string;
+  country: string;
+  city_ufi: number | null;
+  region: string;
+};
+
+export type SearchHotelDestinationsResponse = {
+  status: boolean;
+  message: string;
+  timestamp: number;
+  data?: HotelDestination[];
+};
+
+export type HotelSortOption = {
+  id: string;
+  title: string;
+};
+
+export type GetHotelSortByResponse = {
+  status: boolean;
+  message: string;
+  timestamp: number;
+  data?: HotelSortOption[];
+};
+
+export type HotelFilterAndSortParams = Pick<
+  SearchHotelsParams,
+  | "dest_id"
+  | "search_type"
+  | "arrival_date"
+  | "departure_date"
+  | "adults"
+  | "children_age"
+  | "room_qty"
+  | "categories_filter"
+  | "languagecode"
+>;
+
+export type GetHotelFilterParams = HotelFilterAndSortParams;
+export type GetHotelSortByParams = HotelFilterAndSortParams;
+
+export type HotelFilterBase = {
+  title: string;
+  field: string;
+  filterStyle: "SLIDER" | "CHECKBOX";
+};
+
+export type HotelFilterCheckboxOption = {
+  title: string;
+  genericId: string;
+  countNotAutoextended: number;
+};
+
+export type HotelCheckboxFilter = HotelFilterBase & {
+  filterStyle: "CHECKBOX";
+  options: HotelFilterCheckboxOption[];
+};
+
+export type HotelSliderFilter = HotelFilterBase & {
+  filterStyle: "SLIDER";
+  options: HotelFilterCheckboxOption[];
+  min: string;
+  max: string;
+  minPriceStep: string;
+  minSelected: string;
+  histogram: number[];
+  currency: string;
+};
+
+export type HotelFilter = HotelCheckboxFilter | HotelSliderFilter;
+
+export type GetHotelFilterData = {
+  pagination: {
+    nbResultsTotal: number;
+  };
+  availabilityInfo: {
+    totalAvailableNotAutoextended: number;
+  };
+  filters: HotelFilter[];
+};
+
+export type GetHotelFilterResponse = {
+  status: boolean;
+  message: string;
+  timestamp: number;
+  data?: GetHotelFilterData;
+};

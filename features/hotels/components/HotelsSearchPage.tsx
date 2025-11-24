@@ -2,82 +2,86 @@
 
 import { useState } from "react";
 
-import { ListChecksIcon } from "@/components/ui/icons";
+import { BuildingsIcon } from "@/components/ui/icons";
 import { ROUTES } from "@/constants/routes";
-import type { SearchAttractionsParams } from "@/features/activities/types";
-import { useSearchAttractions } from "../hooks/useSearchAttractions";
-import ActivitiesCard from "./ActivitiesCard";
-import ActivitiesSearchForm from "./ActivitiesSearchForm";
+import type { SearchHotelsParams } from "@/features/hotels/types";
+import { useSearchHotels } from "@/features/hotels/hooks/useSearchHotels";
+import HotelCard from "@/features/hotels/components/HotelCard";
+import HotelsSearchForm from "@/features/hotels/components/HotelsSearchForm";
 import { getApiError } from "@/lib/utils/getApiError";
 import ErrorBanner from "@/components/shared/ErrorBanner";
 import PageHeaderWithBack from "@/components/shared/PageHeader";
 
-export default function ActivitiesSearchPage() {
-  const [searchParams, setSearchParams] =
-    useState<SearchAttractionsParams | null>(null);
+export default function HotelsSearchPage() {
+  const [searchParams, setSearchParams] = useState<SearchHotelsParams | null>(
+    null
+  );
+
   const {
-    data: locations,
-    isLoading: isLoadingLocations,
-    error: searchAttractionsError,
-  } = useSearchAttractions({
+    data: hotelsResponse,
+    isLoading: isLoadingHotels,
+    error: searchHotelsError,
+  } = useSearchHotels({
     params: searchParams ?? {
-      id: "",
+      dest_id: -2092174,
+      search_type: "CITY",
+      arrival_date: "",
+      departure_date: "",
     },
     enabled: !!searchParams,
   });
 
-  const handleSearch = (params: SearchAttractionsParams) => {
+  const handleSearch = (params: SearchHotelsParams) => {
     setSearchParams(params);
   };
 
   const errorMessage =
-    searchAttractionsError && getApiError(searchAttractionsError);
+    searchHotelsError && getApiError(searchHotelsError as unknown);
 
   return (
     <section className="flex-1 rounded-sm bg-white p-8">
       <PageHeaderWithBack
         backHref={ROUTES.PLAN_TRIP}
         backLabel="Back to trip itineraries"
-        title="Search activities"
-        description="Find tours and attractions for your trip and add them to your itinerary."
-        icon={ListChecksIcon}
+        title="Search hotels"
+        description="Find hotels for your trip and add them to your itinerary."
+        icon={BuildingsIcon}
       />
 
       {errorMessage && <ErrorBanner message={errorMessage} />}
 
-      <ActivitiesSearchForm
+      <HotelsSearchForm
         onSearch={handleSearch}
-        isLoadingLocations={isLoadingLocations}
-        locations={locations}
+        isLoadingHotels={isLoadingHotels}
       />
 
-      {locations?.data && (
+      {hotelsResponse?.data && (
         <section className="space-y-4">
           <header className="flex flex-col justify-between gap-2 md:flex-row md:items-center">
             <div>
               <h2 className="text-base font-semibold leading-6 tracking-[-0.02em]">
-                Available activities
+                Available hotels
               </h2>
               <p className="text-xs font-medium text-black-secondary">
-                Showing {locations.data.products.length} experiences
+                Showing {hotelsResponse.data.hotels.length} properties
               </p>
             </div>
           </header>
 
-          {locations.data.products.length === 0 ? (
+          {hotelsResponse.data.hotels.length === 0 ? (
             <div className="flex flex-col items-center justify-center rounded-sm border border-dashed border-neutral-300 bg-neutral-100 px-6 py-10 text-center">
               <p className="text-sm font-semibold text-black-primary">
-                No activities found for your current filters.
+                No hotels found for your current filters.
               </p>
               <p className="mt-1 text-xs font-medium text-black-secondary">
-                Try adjusting your dates, location, or filters to see more
+                Try adjusting your dates, destination, or filters to see more
                 options.
               </p>
             </div>
           ) : (
             <div className="space-y-3">
-              {locations.data.products.map((item) => (
-                <ActivitiesCard key={item.id} activity={item} isSearchResult />
+              {hotelsResponse.data.hotels.map((hotel) => (
+                <HotelCard key={hotel.hotel_id} hotel={hotel} isSearchResult />
               ))}
             </div>
           )}

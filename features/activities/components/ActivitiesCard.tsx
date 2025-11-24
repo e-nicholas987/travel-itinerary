@@ -79,7 +79,6 @@ export default function ActivitiesCard({
       <div className="flex  bg-white p-6 pr-0">
         <ImageCarousel
           images={primaryPhoto?.small ? [primaryPhoto.small] : []}
-          alt={name}
         />
         <div className="flex flex-1 flex-col gap-2">
           <header className="flex flex-col pl-4 pr-10 gap-2 md:flex-row md:items-start md:justify-between">

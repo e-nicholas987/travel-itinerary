@@ -1,0 +1,320 @@
+import { useMemo, useState } from "react";
+
+import { Button, InputField, SelectField } from "@/components/ui";
+import { useCurrencies, useLanguages } from "@/queries";
+import type { SearchHotelsParams } from "@/features/hotels/types";
+import { useSearchHotelDestinations } from "../hooks/useSearchHotelDestinations";
+import { useRouteQueryParams } from "@/hooks/useRouteQueryParams";
+import { useDebounce } from "@/hooks";
+import {
+  HotelsSearchFormValues,
+  hotelsSearchSchema,
+} from "../validation/hotelsSearchSchema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+type HotelsSearchFormProps = {
+  onSearch: (params: SearchHotelsParams) => void;
+  isLoadingHotels: boolean;
+};
+
+const unitOptions = [
+  { label: "Metric", value: "metric" },
+  { label: "Imperial", value: "imperial" },
+];
+
+const temperatureUnitOptions = [
+  { label: "Celsius (°C)", value: "c" },
+  { label: "Fahrenheit (°F)", value: "f" },
+];
+
+export default function HotelsSearchForm({
+  onSearch,
+  isLoadingHotels,
+}: HotelsSearchFormProps) {
+  const [destinationSearchTerm, setDestinationSearchTerm] =
+    useState<string>("");
+  const debouncedDestinationSearchTerm = useDebounce(
+    destinationSearchTerm,
+    500
+  );
+  const { data: languages, isLoading: isLoadingLanguages } = useLanguages();
+  const { data: currencies, isLoading: isLoadingCurrencies } = useCurrencies();
+  const { data: destinations, isLoading: isLoadingDestinations } =
+    useSearchHotelDestinations(debouncedDestinationSearchTerm);
+
+  const { getParam, clearAllParams } = useRouteQueryParams();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useForm<HotelsSearchFormValues>({
+    resolver: zodResolver(hotelsSearchSchema),
+    defaultValues: {
+      dest_id: getParam("destinationId") || "",
+      search_type: getParam("search_type") || "",
+      arrival_date: getParam("arrival_date") || "",
+      departure_date: getParam("departure_date") || "",
+      children_age: getParam("children_age") || "",
+      adults: getParam("adults") || "",
+      room_qty: getParam("room_qty") || "",
+      categories_filter: getParam("categories_filter") || "",
+      languagecode: getParam("languagecode") || "",
+      currency_code: getParam("currency_code") || "",
+      units: getParam("units") || "",
+      temperature_unit: getParam("temperature_unit") || "",
+      location: getParam("location") || "",
+    },
+  });
+
+  const onSubmit = handleSubmit((values) => {
+    const params: SearchHotelsParams = {
+      dest_id: Number(values.dest_id),
+      search_type: values.search_type,
+      arrival_date: values.arrival_date,
+      departure_date: values.departure_date,
+      adults: Number(values.adults),
+      children_age: values.children_age,
+      room_qty: Number(values.room_qty),
+      categories_filter: values.categories_filter,
+      languagecode: values.languagecode,
+      currency_code: values.currency_code,
+      units: values.units as "metric" | "imperial",
+      temperature_unit: values.temperature_unit as "c" | "f",
+      location: values.location,
+    };
+    onSearch(params);
+  });
+
+  const handleReset = () => {
+    clearAllParams();
+    reset({
+      dest_id: "",
+      search_type: "",
+      arrival_date: "",
+      departure_date: "",
+      children_age: "",
+      adults: "",
+      room_qty: "",
+      categories_filter: "",
+      languagecode: "",
+    });
+  };
+
+  const destinationOptions = useMemo(() => {
+    return (
+      destinations?.data?.map((destination) => ({
+        label: destination.name,
+        value: destination.dest_id,
+      })) ?? []
+    );
+  }, [destinations]);
+
+  const languageOptions = useMemo(
+    () =>
+      languages?.data
+        ? languages.data.map((language) => ({
+            label: language.name,
+            value: language.code,
+          }))
+        : [],
+    [languages]
+  );
+
+  const currencyOptions = useMemo(
+    () =>
+      currencies?.data
+        ? currencies.data.map((currency) => ({
+            label: `${currency.name} (${currency.code})`,
+            value: currency.code,
+          }))
+        : [],
+    [currencies]
+  );
+
+  const searchTypeOptions = useMemo(() => {
+    return (
+      destinations?.data?.map((destination) => ({
+        label: destination.search_type,
+        value: destination.search_type,
+      })) ?? []
+    );
+  }, [destinations]);
+
+  return (
+    <form
+      onSubmit={onSubmit}
+      className="mb-8 space-y-5 rounded-sm bg-neutral-300 p-5"
+    >
+      <div className="flex flex-col gap-4 md:flex-row">
+        <SelectField
+          id="hotels-destination"
+          label="Where are you going?"
+          isRequired
+          placeholder="Search city, landmark, or attraction"
+          value={getValues("dest_id")}
+          onChange={(value) => setValue("dest_id", value)}
+          options={destinationOptions}
+          enableSearch
+          searchValue={destinationSearchTerm}
+          onSearchChange={setDestinationSearchTerm}
+          isLoading={isLoadingDestinations}
+          error={errors.dest_id?.message}
+          containerClassName="w-full md:flex-2"
+        />
+
+        <SelectField
+          id="hotels-search-type"
+          label="Search type"
+          isRequired
+          placeholder="Select search type"
+          value={getValues("search_type")}
+          containerClassName="w-full md:flex-1"
+          onChange={(value) => setValue("search_type", value)}
+          options={searchTypeOptions}
+          error={errors.search_type?.message}
+        />
+      </div>
+
+      <div className="flex flex-col gap-4 md:flex-row">
+        <InputField
+          id="hotels-arrival-date"
+          label="Check-in"
+          type="date"
+          {...register("arrival_date")}
+          error={errors.arrival_date?.message}
+        />
+        <InputField
+          id="hotels-departure-date"
+          label="Check-out"
+          type="date"
+          {...register("departure_date")}
+          error={errors.departure_date?.message}
+        />
+      </div>
+
+      <div className="flex flex-col gap-4 md:flex-row">
+        <InputField
+          id="hotels-adults"
+          label="Adults"
+          type="number"
+          min={1}
+          placeholder="Enter number of adults"
+          {...register("adults")}
+          error={errors.adults?.message}
+        />
+
+        <InputField
+          id="hotels-children-age"
+          label="Children ages"
+          placeholder="e.g. 0-17"
+          value={getParam("children_age")}
+          {...register("children_age")}
+          error={errors.children_age?.message}
+        />
+
+        <InputField
+          id="hotels-room-qty"
+          label="Rooms"
+          type="number"
+          min={1}
+          placeholder="Enter number of rooms"
+          value={getParam("room_qty")}
+          {...register("room_qty")}
+          error={errors.room_qty?.message}
+        />
+      </div>
+
+      <div className="flex flex-col gap-4 md:flex-row">
+        <SelectField
+          id="hotels-currency"
+          label="Currency"
+          placeholder="Select currency"
+          value={getParam("currency_code")}
+          onChange={(value) => setValue("currency_code", value)}
+          options={currencyOptions}
+          isLoading={isLoadingCurrencies}
+          error={errors.currency_code?.message}
+        />
+
+        <SelectField
+          id="hotels-language"
+          label="Language"
+          placeholder="Select language"
+          value={getParam("languagecode")}
+          onChange={(value) => setValue("languagecode", value)}
+          options={languageOptions}
+          isLoading={isLoadingLanguages}
+          error={errors.languagecode?.message}
+        />
+
+        <InputField
+          id="hotels-location"
+          label="Location (country code)"
+          placeholder="e.g. US"
+          value={getParam("location")}
+          onChange={(event) => setValue("location", event.target.value)}
+          error={errors.location?.message}
+        />
+      </div>
+
+      <div className="flex flex-col gap-4 md:flex-row border-t border-neutral-500/40 pt-4">
+        <SelectField
+          id="hotels-units"
+          label="Units"
+          placeholder="Select units"
+          value={getParam("units")}
+          onChange={(value) => setValue("units", value)}
+          options={unitOptions}
+          error={errors.units?.message}
+        />
+
+        <SelectField
+          id="hotels-temperature-unit"
+          label="Temperature unit"
+          placeholder="Select temperature unit"
+          value={getParam("temperature_unit")}
+          onChange={(value) => setValue("temperature_unit", value)}
+          options={temperatureUnitOptions}
+          error={errors.temperature_unit?.message}
+        />
+
+        <InputField
+          id="hotels-categories-filter"
+          label="Category filter"
+          placeholder="Optional filter tag"
+          value={getParam("categories_filter")}
+          onChange={(event) =>
+            setValue("categories_filter", event.target.value)
+          }
+          error={errors.categories_filter?.message}
+        />
+      </div>
+
+      <div className="flex items-center justify-end gap-3 pt-4">
+        <Button
+          type="button"
+          variant="tertiary"
+          size="md"
+          onClick={handleReset}
+          className="hover:underline"
+        >
+          Reset
+        </Button>
+
+        <Button
+          type="submit"
+          variant="primary"
+          size="md"
+          isLoading={isLoadingHotels}
+        >
+          Search hotels
+        </Button>
+      </div>
+    </form>
+  );
+}

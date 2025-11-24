@@ -15,17 +15,17 @@ import type {
 import { useRouteQueryParams } from "@/hooks";
 import { useLanguages } from "@/queries";
 
-type AddActivitiesFormProps = {
+type ActivitiesSearchFormProps = {
   onSearch: (params: SearchAttractionsParams) => void;
   isLoadingLocations: boolean;
   locations?: SearchAttractionsResponse;
 };
 
-export default function AddActivitiesForm({
+export default function ActivitiesSearchForm({
   onSearch,
   isLoadingLocations,
   locations,
-}: AddActivitiesFormProps) {
+}: ActivitiesSearchFormProps) {
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(true);
   const { setParams, getParam, getAllParams, clearAllParams } =
     useRouteQueryParams();
@@ -159,3 +159,5 @@ export default function AddActivitiesForm({
     </form>
   );
 }
+
+
