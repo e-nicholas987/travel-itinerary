@@ -6,7 +6,6 @@ import { Button, InputField, SelectField } from "@/components/ui";
 import { useCurrencies, useLanguages } from "@/queries";
 import type { SearchHotelsParams } from "@/features/hotels/types";
 import { useSearchHotelDestinations } from "../hooks/useSearchHotelDestinations";
-import { useRouteQueryParams } from "@/hooks/useRouteQueryParams";
 import { useDebounce } from "@/hooks";
 import {
   HotelsSearchFormValues,
@@ -46,31 +45,28 @@ export default function HotelsSearchForm({
   const { data: destinations, isLoading: isLoadingDestinations } =
     useSearchHotelDestinations(debouncedDestinationSearchTerm);
 
-  const { getParam, clearAllParams } = useRouteQueryParams();
-
   const {
     register,
     handleSubmit,
     reset,
-    setValue,
     control,
     formState: { errors },
   } = useForm<HotelsSearchFormValues>({
     resolver: zodResolver(hotelsSearchSchema),
     defaultValues: {
-      dest_id: getParam("destinationId") || "",
-      search_type: getParam("search_type") || "",
-      arrival_date: getParam("arrival_date") || "",
-      departure_date: getParam("departure_date") || "",
-      children_age: getParam("children_age") || "",
-      adults: getParam("adults") || "",
-      room_qty: getParam("room_qty") || "",
-      categories_filter: getParam("categories_filter") || "",
-      languagecode: getParam("languagecode") || "",
-      currency_code: getParam("currency_code") || "",
-      units: getParam("units") || "",
-      temperature_unit: getParam("temperature_unit") || "",
-      location: getParam("location") || "",
+      dest_id: "",
+      search_type: "",
+      arrival_date: "",
+      departure_date: "",
+      children_age: "",
+      adults: "",
+      room_qty: "",
+      categories_filter: "",
+      languagecode: "",
+      currency_code: "",
+      units: "metric",
+      temperature_unit: "c",
+      location: "",
     },
   });
 
@@ -80,21 +76,20 @@ export default function HotelsSearchForm({
       search_type: values.search_type,
       arrival_date: values.arrival_date,
       departure_date: values.departure_date,
-      adults: Number(values.adults),
+      adults: values.adults ? Number(values.adults) : undefined,
       children_age: values.children_age,
-      room_qty: Number(values.room_qty),
+      room_qty: values.room_qty ? Number(values.room_qty) : undefined,
       categories_filter: values.categories_filter,
       languagecode: values.languagecode,
       currency_code: values.currency_code,
-      units: values.units as "metric" | "imperial",
-      temperature_unit: values.temperature_unit as "c" | "f",
+      units: (values.units as "metric" | "imperial") || "metric",
+      temperature_unit: (values.temperature_unit as "c" | "f") || "c",
       location: values.location,
     };
     onSearch(params);
   });
 
   const handleReset = () => {
-    clearAllParams();
     reset({
       dest_id: "",
       search_type: "",
@@ -105,7 +100,12 @@ export default function HotelsSearchForm({
       room_qty: "",
       categories_filter: "",
       languagecode: "",
+      currency_code: "",
+      units: "metric",
+      temperature_unit: "c",
+      location: "",
     });
+    setDestinationSearchTerm("");
   };
 
   const destinationOptions = useMemo(() => {
@@ -234,7 +234,6 @@ export default function HotelsSearchForm({
           id="hotels-children-age"
           label="Children ages"
           placeholder="e.g. 0-17"
-          value={getParam("children_age")}
           {...register("children_age")}
           error={errors.children_age?.message}
         />
@@ -245,7 +244,6 @@ export default function HotelsSearchForm({
           type="number"
           min={1}
           placeholder="Enter number of rooms"
-          value={getParam("room_qty")}
           {...register("room_qty")}
           error={errors.room_qty?.message}
         />
@@ -290,8 +288,7 @@ export default function HotelsSearchForm({
           id="hotels-location"
           label="Location (country code)"
           placeholder="e.g. US"
-          value={getParam("location")}
-          onChange={(event) => setValue("location", event.target.value)}
+          {...register("location")}
           error={errors.location?.message}
         />
       </div>
@@ -333,10 +330,7 @@ export default function HotelsSearchForm({
           id="hotels-categories-filter"
           label="Category filter"
           placeholder="Optional filter tag"
-          value={getParam("categories_filter")}
-          onChange={(event) =>
-            setValue("categories_filter", event.target.value)
-          }
+          {...register("categories_filter")}
           error={errors.categories_filter?.message}
         />
       </div>

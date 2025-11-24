@@ -11,11 +11,13 @@ import HotelsSearchForm from "@/features/hotels/components/HotelsSearchForm";
 import { getApiError } from "@/lib/utils/getApiError";
 import ErrorBanner from "@/components/shared/ErrorBanner";
 import PageHeaderWithBack from "@/components/shared/PageHeader";
+import { useRouteQueryParams } from "@/hooks";
 
 export default function HotelsSearchPage() {
   const [searchParams, setSearchParams] = useState<
     SearchHotelsParams | undefined
   >(undefined);
+  const { setParams } = useRouteQueryParams();
 
   const {
     data: hotelsResponse,
@@ -28,6 +30,7 @@ export default function HotelsSearchPage() {
 
   const handleSearch = (params: SearchHotelsParams) => {
     setSearchParams(params);
+    setParams(params);
   };
 
   const errorMessage =
