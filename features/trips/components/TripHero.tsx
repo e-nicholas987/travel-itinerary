@@ -11,6 +11,7 @@ import Image from "next/image";
 import type { ItineraryType } from "../types";
 import { ROUTES, RouteValue } from "@/constants/routes";
 import ItineraryActionCard from "./ItineraryActionCard";
+import Link from "next/link";
 
 interface ItineraryActionCardProps {
   title: ItineraryType;
@@ -39,13 +40,13 @@ export default function TripHero() {
         style={{ backgroundImage: `url(${IMAGES.tripHeroIllustration})` }}
         className="relative h-50 p-6 bg-cover bg-top-left bg-no-repeat"
       >
-        <button
-          type="button"
+        <Link
+          href={ROUTES.HOME}
           aria-label="back to home"
-          className="size-12 bg-white/20 rounded-sm hover:bg-primary-600/12 hover:text-primary-600 grid place-items-center"
+          className="size-12 cursor-pointer bg-white/20 rounded-sm hover:bg-primary-600/12 hover:text-primary-600 grid place-items-center"
         >
           <ArrowLeftIcon className="size-6" />
-        </button>
+        </Link>
       </div>
 
       <div className="flex items-center justify-between mt-5">
