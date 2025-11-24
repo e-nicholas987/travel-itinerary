@@ -104,11 +104,9 @@ export default function SelectField({
           id={id}
           aria-invalid={!!error}
           aria-describedby={error ? `${id}-error` : undefined}
+          className="text-left whitespace-nowrap truncate"
         >
-          <SelectValue
-            className="text-left whitespace-nowrap truncate"
-            placeholder={isLoading ? "Loading" : placeholder}
-          />
+          <SelectValue placeholder={isLoading ? "Loading" : placeholder} />
         </SelectTrigger>
 
         <SelectContent hideTopScrollbar={enableSearch} className="pt-0">
