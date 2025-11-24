@@ -25,3 +25,5 @@ export { default as CalendarBlankIcon } from "./CalendarBlankIcon";
 export { default as AirplaneInFlightIcon } from "./AirplaneInFlightIcon";
 export { default as WarehouseIcon } from "./WarehouseIcon";
 export { default as StarIcon } from "./StarIcon";
+export { default as AirplaneTakeOffIcon } from "./AirplaneTakeOffIcon";
+export { default as AirplaneLandingIcon } from "./AirplaneLandingIcon";

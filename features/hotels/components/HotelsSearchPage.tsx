@@ -24,6 +24,7 @@ export default function HotelsSearchPage() {
     data: hotelsResponse,
     isLoading: isLoadingHotels,
     error: searchHotelsError,
+    refetch,
   } = useSearchHotels({
     params: searchParams,
     enabled: !!searchParams?.dest_id,
@@ -32,6 +33,7 @@ export default function HotelsSearchPage() {
   const handleSearch = (params: SearchHotelsParams) => {
     setSearchParams(params);
     setParams(params);
+    if (JSON.stringify(params) === JSON.stringify(searchParams)) refetch();
   };
 
   const errorMessage = useMemo(() => {

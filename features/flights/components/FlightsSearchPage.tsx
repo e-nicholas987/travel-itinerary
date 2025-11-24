@@ -21,8 +21,9 @@ export default function FlightsSearchPage() {
 
   const {
     data: flightsResponse,
-    isLoading: isLoadingFlights,
+    isFetching: isFetchingFlights,
     error: searchFlightsError,
+    refetch,
   } = useSearchFlights({
     params: searchParams ?? {
       fromId: "",
@@ -34,6 +35,7 @@ export default function FlightsSearchPage() {
 
   const handleSearch = (params: SearchFlightsParams) => {
     setSearchParams(params);
+    if (JSON.stringify(params) === JSON.stringify(searchParams)) refetch();
   };
 
   const errorMessage = useMemo(() => {
@@ -62,14 +64,14 @@ export default function FlightsSearchPage() {
 
       <FlightsSearchForm
         onSearch={handleSearch}
-        isLoadingFlights={isLoadingFlights}
+        isLoadingFlights={isFetchingFlights}
       />
 
       {flightsResponse?.data && (
         <section className="space-y-4">
           <ResultsHeader
             title="Available flights"
-            count={flightsResponse.data?.flightOffers.length}
+            count={flightsResponse.data?.flightOffers?.length}
             label="options"
           />
 
@@ -85,7 +87,7 @@ export default function FlightsSearchPage() {
           ) : (
             <div className="space-y-3">
               {flightsResponse.data.flightOffers.map((offer) => (
-                <FlightCard key={offer.token} />
+                <FlightCard key={offer.token} offer={offer} isSearchResult />
               ))}
             </div>
           )}

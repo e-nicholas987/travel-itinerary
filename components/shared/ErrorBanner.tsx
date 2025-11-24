@@ -31,7 +31,7 @@ export default function ErrorBanner({
       role="alert"
       aria-live="polite"
       className={cn(
-        "mb-4 flex bg-error-100 items-start gap-3 rounded-sm border border-error-200 bg-error-50 px-4 py-3 text-sm text-red-600/70",
+        "mb-4 flex bg-error-100 items-start gap-3 rounded-sm border border-error-200 bg-error-50 px-4 py-3 text-sm text-red-700/70",
         className
       )}
     >
@@ -48,7 +48,7 @@ export default function ErrorBanner({
       <button
         type="button"
         onClick={() => setShowBanner(false)}
-        className="ml-2 mt-0.5 inline-flex h-5 cursor-pointer w-5 items-center justify-center rounded-sm text-red-600/70 hover:bg-error-100"
+        className="ml-2 mt-0.5 inline-flex h-5 cursor-pointer w-5 items-center justify-center rounded-sm text-red-700/70 hover:bg-error-100"
         aria-label="Dismiss error"
       >
         <XIcon className="size-3.5" />

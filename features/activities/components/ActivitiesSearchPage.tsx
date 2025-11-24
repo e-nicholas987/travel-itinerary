@@ -18,8 +18,9 @@ export default function ActivitiesSearchPage() {
     useState<SearchAttractionsParams | null>(null);
   const {
     data: locations,
-    isLoading: isLoadingLocations,
+    isFetching: isFetchingLocations,
     error: searchAttractionsError,
+    refetch,
   } = useSearchAttractions({
     params: searchParams ?? {
       id: "",
@@ -29,6 +30,7 @@ export default function ActivitiesSearchPage() {
 
   const handleSearch = (params: SearchAttractionsParams) => {
     setSearchParams(params);
+    if (JSON.stringify(params) === JSON.stringify(searchParams)) refetch();
   };
 
   const errorMessage = useMemo(() => {
@@ -52,7 +54,7 @@ export default function ActivitiesSearchPage() {
 
       <ActivitiesSearchForm
         onSearch={handleSearch}
-        isLoadingLocations={isLoadingLocations}
+        isLoadingLocations={isFetchingLocations}
         locations={locations}
       />
 
