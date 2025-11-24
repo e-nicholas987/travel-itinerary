@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { AttractionsProduct } from "../types";
 
 import { Button, StarIcon } from "@/components/ui";
@@ -11,15 +12,19 @@ import {
 } from "lucide-react";
 import RemoveItineraryButton from "@/components/shared/RemoveItineraryButton";
 import { cn } from "@/lib/utils";
+import { useLocalStorage } from "@/hooks";
+import { ACTIVITIES_ITINERARY_STORAGE_KEY } from "@/constants/storageKeys";
 
 type ActivitiesCardProps = {
   activity: AttractionsProduct;
   isSearchResult?: boolean;
+  onRemoveFromItinerary?: () => void;
 };
 
 export default function ActivitiesCard({
   activity,
   isSearchResult = false,
+  onRemoveFromItinerary,
 }: ActivitiesCardProps) {
   const {
     name,
@@ -28,6 +33,32 @@ export default function ActivitiesCard({
     primaryPhoto,
     reviewsStats,
   } = activity;
+
+  const { getItem, setItem } = useLocalStorage();
+  const [isInItinerary, setIsInItinerary] = useState(() => {
+    const stored =
+      getItem<AttractionsProduct[]>(ACTIVITIES_ITINERARY_STORAGE_KEY) ?? [];
+
+    if (!Array.isArray(stored)) return false;
+
+    return stored.some((item) => item.id === activity.id);
+  });
+
+  const handleToggleItinerary = () => {
+    const stored =
+      getItem<AttractionsProduct[]>(ACTIVITIES_ITINERARY_STORAGE_KEY) ?? [];
+
+    const exists = stored.some((item) => item.id === activity.id);
+    const updated = exists
+      ? stored.filter((item) => item.id !== activity.id)
+      : [...stored, activity];
+
+    const success = setItem(ACTIVITIES_ITINERARY_STORAGE_KEY, updated);
+
+    if (success) {
+      setIsInItinerary(!exists);
+    }
+  };
 
   const rating = reviewsStats?.combinedNumericStats.average ?? null;
   const reviewCount = reviewsStats?.combinedNumericStats.total ?? null;
@@ -42,7 +73,7 @@ export default function ActivitiesCard({
     <article
       className={cn("rounded-sm overflow-hidden", {
         "grid grid-cols-[1fr_auto] shadow-sm border border-black-secondary ":
-          isSearchResult,
+          !isSearchResult,
       })}
     >
       <div className="flex  bg-white p-6 pr-0">
@@ -129,15 +160,27 @@ export default function ActivitiesCard({
               </>
             )}
             {isSearchResult && (
-              <Button className="ml-auto" type="button">
-                Add to itinerary
+              <Button
+                className={cn(
+                  "ml-auto",
+                  isInItinerary &&
+                    "bg-error-100 text-error-900 hover:bg-error-100/90"
+                )}
+                type="button"
+                onClick={handleToggleItinerary}
+              >
+                {isInItinerary ? "Remove from itinerary" : "Add to itinerary"}
               </Button>
             )}
           </footer>
         </div>
       </div>
 
-      {!isSearchResult && <RemoveItineraryButton onClick={() => {}} />}
+      {!isSearchResult && (
+        <RemoveItineraryButton
+          onClick={onRemoveFromItinerary ? onRemoveFromItinerary : () => {}}
+        />
+      )}
     </article>
   );
 }
