@@ -295,11 +295,11 @@ export default function FlightsSearchForm({
 
         <div className="mt-4 flex items-center justify-end gap-3 border-t border-neutral-500/40 pt-4">
           <Button
-            type="button"
+            type="reset"
             variant="tertiary"
             size="md"
             onClick={handleReset}
-            className="hover:underline w-full sm:w-auto"
+            className="w-full sm:w-auto"
           >
             Reset
           </Button>

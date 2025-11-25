@@ -268,7 +268,7 @@ export default function ActivitiesSearchForm({
               clearAdvancedFilters();
               handleReset();
             }}
-            className="hover:underline w-full sm:w-auto"
+            className="w-full sm:w-auto"
           >
             Reset
           </Button>

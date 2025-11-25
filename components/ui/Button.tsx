@@ -23,14 +23,14 @@ export function buttonVariants({
   className?: string;
 }) {
   const base =
-    "inline-flex cursor-pointer items-center relative justify-center gap-2 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60";
+    "inline-flex cursor-pointer items-center relative justify-center gap-2 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 duration-300";
 
   const variants = {
     primary: "bg-primary-600 text-white hover:bg-primary-600/90 shadow-sm",
     secondary:
       "bg-white text-primary-600 ring-1 ring-primary-600 hover:bg-primary-100",
     tertiary:
-      "bg-neutral-300 text-color-text-black-primary hover:bg-neutral-300/80",
+      "bg-neutral-300 text-color-text-black-primary hover:bg-neutral-500",
     white: "bg-white text-primary-600 hover:bg-primary-100",
   };
 
