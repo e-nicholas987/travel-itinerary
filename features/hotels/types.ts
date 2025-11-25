@@ -81,7 +81,12 @@ export type SearchHotelsData = {
 
 export type SearchHotelsResponse = {
   status: boolean;
-  message: string;
+  message:
+    | string
+    | {
+        code: string;
+        message: string;
+      };
   timestamp: number;
   data?: SearchHotelsData;
 };

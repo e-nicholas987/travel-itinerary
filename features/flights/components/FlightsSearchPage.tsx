@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -19,6 +19,7 @@ import { searchFlights } from "../api/flightServices";
 import FlightCard from "./FlightCard";
 import FlightsSearchForm from "./FlightsSearchForm";
 import type { SearchFlightsData, SearchFlightsParams } from "../types";
+import { useGetApiError } from "@/hooks";
 
 export default function FlightsSearchPage() {
   const [searchedFlights, setSearchedFlights] = useState<
@@ -49,13 +50,10 @@ export default function FlightsSearchPage() {
     });
   };
 
-  const errorMessage = useMemo(() => {
-    if (searchFlightsData?.message.includes("error")) {
-      return searchFlightsData?.message;
-    }
-
-    return searchFlightsError && getApiError(searchFlightsError);
-  }, [searchFlightsData?.message, searchFlightsError]);
+  const errorMessage = useGetApiError({
+    message: searchFlightsData?.message,
+    error: searchFlightsError,
+  });
 
   return (
     <section className="flex-1 rounded-sm bg-white p-4 sm:p-6 lg:p-8">

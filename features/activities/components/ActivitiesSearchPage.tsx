@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { ListChecksIcon } from "@/components/ui/icons";
 import { ROUTES } from "@/constants/routes";
@@ -20,6 +20,7 @@ import useScrollIntoView from "@/hooks/useScrollIntoView";
 import { searchAttractions } from "../api/activitiesService";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useGetApiError } from "@/hooks";
 
 export default function ActivitiesSearchPage() {
   const [searchedAttractions, setSearchedAttractions] = useState<
@@ -48,12 +49,10 @@ export default function ActivitiesSearchPage() {
     });
   };
 
-  const errorMessage = useMemo(() => {
-    if (searchAttractionsData?.message.includes("error")) {
-      return searchAttractionsData?.message;
-    }
-    return searchAttractionsError && getApiError(searchAttractionsError);
-  }, [searchAttractionsData?.message, searchAttractionsError]);
+  const errorMessage = useGetApiError({
+    message: searchAttractionsData?.message,
+    error: searchAttractionsError,
+  });
 
   return (
     <section className="flex-1 rounded-sm bg-white p-4 sm:p-6 lg:p-8">

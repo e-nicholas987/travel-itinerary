@@ -1,7 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
-
+import { useState } from "react";
 import { BuildingsIcon } from "@/components/ui/icons";
 import { ROUTES } from "@/constants/routes";
 import type {
@@ -20,9 +19,12 @@ import useScrollIntoView from "@/hooks/useScrollIntoView";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { searchHotels } from "../api/hotelsServices";
+import { useGetApiError } from "@/hooks";
 
 export default function HotelsSearchPage() {
-  const [searchedHotels, setSearchedHotels] = useState<SearchHotelsHotel[]>([]);
+  const [searchedHotels, setSearchedHotels] = useState<
+    SearchHotelsHotel[] | undefined
+  >(undefined);
   const [scrollTrigger, setScrollTrigger] = useState<number>(0);
   const {
     mutate: searchHotelsMutation,
@@ -47,12 +49,10 @@ export default function HotelsSearchPage() {
     });
   };
 
-  const errorMessage = useMemo(() => {
-    if (searchHotelsData?.message.includes("error")) {
-      return searchHotelsData?.message;
-    }
-    return searchHotelsError && getApiError(searchHotelsError);
-  }, [searchHotelsData?.message, searchHotelsError]);
+  const errorMessage = useGetApiError({
+    message: searchHotelsData?.message,
+    error: searchHotelsError,
+  });
 
   return (
     <section className="flex-1 rounded-sm bg-white p-4 sm:p-6 lg:p-8">
@@ -71,13 +71,13 @@ export default function HotelsSearchPage() {
         isLoadingHotels={isLoadingHotels}
       />
 
-      {!searchedHotels?.length && isLoadingHotels && (
+      {!searchedHotels && isLoadingHotels && (
         <div className="mt-4">
           <ResultsLoader message="Searching for hotels..." />
         </div>
       )}
 
-      {searchedHotels?.length && (
+      {searchedHotels && !isLoadingHotels && (
         <section
           ref={scrollIntoViewRef}
           className="space-y-4 scroll-mt-(--layout-offset)"
