@@ -23,7 +23,7 @@ export default function PageHeaderWithBack({
       <div className="flex items-center justify-between gap-4">
         <Link
           href={backHref}
-          className="inline-flex items-center gap-2 text-sm font-medium text-black-secondary transition-colors hover:text-primary-600"
+          className="inline-flex -ml-4 -mt-2 py-2 px-4 rounded-sm  items-center gap-2 text-sm font-medium text-black-secondary transition-colors hover:bg-primary-600/10 hover:text-primary-600 duration-300"
         >
           <ArrowLeftIcon className="size-5" />
           {backLabel}

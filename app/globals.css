@@ -45,6 +45,17 @@
       --layout-padding: 2.5rem;
     }
   }
+
+  input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    height: 3rem;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+  }
 }
 
 @layer utilities {

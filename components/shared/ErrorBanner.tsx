@@ -2,6 +2,7 @@ import type React from "react";
 import { AlertTriangleIcon, XIcon } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { useEffect, useState } from "react";
+import useScrollIntoView from "@/hooks/useScrollIntoView";
 
 type ErrorBannerProps = {
   title?: string;
@@ -15,6 +16,7 @@ export default function ErrorBanner({
   className,
 }: ErrorBannerProps) {
   const [showBanner, setShowBanner] = useState<boolean>(true);
+  const scrollIntoViewRef = useScrollIntoView<HTMLDivElement>(showBanner);
 
   useEffect(() => {
     if (message) {
@@ -28,10 +30,11 @@ export default function ErrorBanner({
 
   return (
     <div
+      ref={scrollIntoViewRef}
       role="alert"
       aria-live="polite"
       className={cn(
-        "mb-4 flex bg-error-100 items-start gap-3 rounded-sm border border-error-200 bg-error-50 px-4 py-3 text-sm text-red-700/70",
+        "mb-4 scroll-mt-(--layout-offset) flex bg-error-100 items-start gap-3 rounded-sm border border-error-200 bg-error-50 px-4 py-3 text-sm text-red-700/70",
         className
       )}
     >

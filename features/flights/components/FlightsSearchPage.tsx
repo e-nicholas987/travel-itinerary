@@ -74,13 +74,13 @@ export default function FlightsSearchPage() {
         isLoadingFlights={isLoadingFlights}
       />
 
-      {isLoadingFlights && !searchedFlights && (
+      {isLoadingFlights && (
         <div className="mt-4">
           <ResultsLoader message="Searching for flights..." />
         </div>
       )}
 
-      {searchedFlights && (
+      {searchedFlights && !isLoadingFlights && (
         <section
           ref={scrollIntoViewRef}
           className="space-y-4 scroll-mt-(--layout-offset)"

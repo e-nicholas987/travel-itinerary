@@ -163,6 +163,7 @@ export default function ActivitiesSearchForm({
                   id="activities-start-date"
                   label="Start date"
                   containerClassName="h-full"
+                  placeholder="dd/mm/yyyy"
                   type="date"
                   {...register("startDate")}
                   error={errors.startDate?.message}
@@ -171,6 +172,7 @@ export default function ActivitiesSearchForm({
                   id="activities-end-date"
                   label="End date"
                   containerClassName="h-full"
+                  placeholder="dd/mm/yyyy"
                   type="date"
                   {...register("endDate")}
                   error={errors.endDate?.message}

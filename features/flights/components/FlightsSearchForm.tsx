@@ -183,6 +183,7 @@ export default function FlightsSearchForm({
                 id="flights-depart-date"
                 label="Departure date"
                 type="date"
+                placeholder="dd/mm/yyyy"
                 isRequired
                 {...form.register("departDate")}
                 error={errors.departDate?.message}
@@ -191,6 +192,7 @@ export default function FlightsSearchForm({
                 id="flights-return-date"
                 label="Return date"
                 type="date"
+                placeholder="dd/mm/yyyy"
                 {...form.register("returnDate")}
                 error={errors.returnDate?.message}
               />

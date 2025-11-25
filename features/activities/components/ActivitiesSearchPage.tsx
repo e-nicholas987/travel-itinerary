@@ -73,13 +73,13 @@ export default function ActivitiesSearchPage() {
         attractions={searchedAttractions}
       />
 
-      {isLoadingActivities && !searchedAttractions && (
+      {isLoadingActivities && (
         <div className="mt-4">
           <ResultsLoader message="Searching for activities..." />
         </div>
       )}
 
-      {searchedAttractions && (
+      {searchedAttractions && !isLoadingActivities && (
         <section
           ref={scrollIntoViewRef}
           className="space-y-4 scroll-mt-(--layout-offset)"

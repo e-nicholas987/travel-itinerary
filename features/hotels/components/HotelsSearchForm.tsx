@@ -211,6 +211,7 @@ export default function HotelsSearchForm({
               id="hotels-arrival-date"
               label="Check-in"
               type="date"
+              placeholder="dd/mm/yyyy"
               {...register("arrival_date")}
               isRequired
               error={errors.arrival_date?.message}
@@ -219,6 +220,7 @@ export default function HotelsSearchForm({
               id="hotels-departure-date"
               label="Check-out"
               type="date"
+              placeholder="dd/mm/yyyy"
               {...register("departure_date")}
               isRequired
               error={errors.departure_date?.message}

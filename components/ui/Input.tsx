@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils/cn";
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, useState } from "react";
 import Label from "./Label";
 
 interface InputProps
@@ -23,6 +23,10 @@ export default function InputField({
   isRequired,
   ...props
 }: InputProps) {
+  const [contolledInputType, setControlledInputType] = useState<
+    string | undefined
+  >(props.type === "date" ? "text" : props.type);
+
   return (
     <div className={cn("w-full h-full", containerClassName)}>
       <Label
@@ -36,10 +40,15 @@ export default function InputField({
         <input
           id={id}
           {...props}
+          type={contolledInputType}
           className={cn(
             "placeholder:text-black-secondary  bg-white focus:ring-primary-600/30 focus:border-primary-600 focus:shadow-primary-600 h-12 w-full rounded-sm border border-primary-1100 py-2 p-4 text-black outline-none transition-shadow placeholder:text-sm focus:border focus:bg-white [type='date']]:text-sm focus:ring-2",
             inputClassName
           )}
+          onFocus={() => setControlledInputType(props.type)}
+          onBlur={() =>
+            props.type === "date" ? setControlledInputType("text") : undefined
+          }
         />
         {icon && icon}
       </div>

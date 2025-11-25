@@ -54,7 +54,14 @@ export default function Button({
   return (
     <button
       type="button"
-      className={buttonVariants({ variant, size, className })}
+      className={cn(
+        buttonVariants({
+          variant,
+          size,
+          className,
+        }),
+        isLoading && "pointer-events-none opacity-30"
+      )}
       {...props}
     >
       {isLoading && (
