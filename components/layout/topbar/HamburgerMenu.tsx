@@ -22,7 +22,7 @@ export default function HamburgerMenu({ items }: { items: NavItem[] }) {
       <button
         type="button"
         aria-label="Open main menu"
-        className="lg:hidden inline-flex items-center size-14.5 justify-center rounded-sm bg-white p-2 text-neutral-900 shadow-sm"
+        className="lg:hidden transition-colors duration-300 hover:bg-primary-600/10 cursor-pointer inline-flex items-center size-14.5 justify-center rounded-sm bg-white p-2 text-neutral-900 shadow-sm"
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <Menu className="size-5" />
@@ -52,15 +52,22 @@ export default function HamburgerMenu({ items }: { items: NavItem[] }) {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "flex items-center gap-3 rounded-sm px-3 py-4 text-sm font-medium text-black-secondary",
+                      "flex items-center gap-3 rounded-sm px-3 py-4 text-sm font-medium ",
 
                       isActiveRoute(item.href)
-                        ? "bg-primary-600/10"
-                        : " hover:bg-neutral-300/60"
+                        ? "bg-primary-600/10 text-primary-600"
+                        : " hover:bg-neutral-300/60 text-black-secondary"
                     )}
                     onClick={closeMenu}
                   >
-                    <item.Icon className="size-5 text-neutral-700" />
+                    <item.Icon
+                      className={cn(
+                        "size-5",
+                        isActiveRoute(item.href)
+                          ? "text-primary-600"
+                          : "text-neutral-700"
+                      )}
+                    />
                     <span>{item.label}</span>
                   </Link>
                 ))}
