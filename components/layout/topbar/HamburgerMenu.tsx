@@ -8,7 +8,7 @@ import Link from "next/link";
 import type { NavItem } from "./types";
 import { ROUTES } from "@/constants/routes";
 import { buttonVariants } from "@/components/ui/Button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 import { useActiveRoute } from "@/hooks";
 
 export default function HamburgerMenu({ items }: { items: NavItem[] }) {

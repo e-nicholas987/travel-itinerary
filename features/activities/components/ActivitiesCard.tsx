@@ -10,7 +10,7 @@ import RemoveItineraryButton from "@/components/shared/RemoveItineraryButton";
 import { Button, StarIcon } from "@/components/ui";
 import { useItineraryItem } from "@/features/activities/hooks/useItenaryItem";
 import { ACTIVITIES_ITINERARY_STORAGE_KEY } from "@/constants/storageKeys";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 import { formatCurrency } from "@/lib/utils/formatCurrency";
 import type { AttractionsProduct } from "../types";
 

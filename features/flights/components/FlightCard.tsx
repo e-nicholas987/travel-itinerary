@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/icons";
 import { FLIGHTS_ITINERARY_STORAGE_KEY } from "@/constants/storageKeys";
 import { useItineraryItem } from "@/features/activities/hooks/useItenaryItem";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 import { formatCurrency } from "@/lib/utils/formatCurrency";
 import type { FlightOffer } from "../types";
 import { formatDuration } from "../utils/formateDuration";

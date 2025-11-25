@@ -4,7 +4,7 @@ import { formatCurrency } from "@/lib/utils/formatCurrency";
 import type { SearchHotelsHotel } from "../types";
 import RemoveItineraryButton from "@/components/shared/RemoveItineraryButton";
 import { HOTELS_ITINERARY_STORAGE_KEY } from "@/constants/storageKeys";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 import { Calendar, MapPin } from "lucide-react";
 import { useItineraryItem } from "@/features/activities/hooks/useItenaryItem";
 

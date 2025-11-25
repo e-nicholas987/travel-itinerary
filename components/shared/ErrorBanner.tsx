@@ -1,6 +1,6 @@
 import type React from "react";
 import { AlertTriangleIcon, XIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 import { useEffect, useState } from "react";
 
 type ErrorBannerProps = {
