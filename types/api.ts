@@ -13,3 +13,7 @@ export interface LanguagesResponse {
     countryFlag: string;
   }[];
 }
+
+export interface LocationsResponse {
+  data: string[];
+}

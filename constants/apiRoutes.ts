@@ -19,5 +19,6 @@ export const API_ROUTES = {
   meta: {
     getCurrency: "meta/getCurrency",
     getLanguages: "meta/getLanguages",
+    getLocations: "meta/getLocations",
   },
 } as const;

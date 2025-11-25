@@ -33,6 +33,8 @@ export default function HotelCard({
     checkoutDate,
   } = property;
 
+  console.log(hotel);
+
   const { isInItinerary, toggleItinerary } =
     useItineraryItem<SearchHotelsHotel>({
       storageKey: HOTELS_ITINERARY_STORAGE_KEY,

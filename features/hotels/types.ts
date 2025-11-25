@@ -152,7 +152,6 @@ export type GetHotelSortByResponse = {
 
 export type HotelFilterAndSortParams = Pick<
   SearchHotelsParams,
-  | "dest_id"
   | "search_type"
   | "arrival_date"
   | "departure_date"
@@ -161,7 +160,9 @@ export type HotelFilterAndSortParams = Pick<
   | "room_qty"
   | "categories_filter"
   | "languagecode"
->;
+> & {
+  dest_id: string;
+};
 
 export type GetHotelFilterParams = HotelFilterAndSortParams;
 export type GetHotelSortByParams = HotelFilterAndSortParams;
