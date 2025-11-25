@@ -171,6 +171,7 @@ export default function HotelsSearchForm({
                   placeholder="Search city, landmark, or attraction"
                   value={field.value}
                   onChange={field.onChange}
+                  ref={field.ref}
                   options={destinationOptions}
                   enableSearch
                   searchValue={destinationSearchTerm}

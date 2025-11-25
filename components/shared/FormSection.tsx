@@ -12,7 +12,7 @@ export default function FormSection({
   children,
 }: FormSectionProps) {
   return (
-    <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
+    <section className="space-y-4 rounded-sm bg-white pb-5 sm:p-5">
       <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
         <h3 className="text-sm font-semibold text-black-primary">{title}</h3>
         {description && (
@@ -26,6 +26,3 @@ export default function FormSection({
     </section>
   );
 }
-
-
-

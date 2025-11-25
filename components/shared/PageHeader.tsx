@@ -19,7 +19,7 @@ export default function PageHeaderWithBack({
   icon: Icon,
 }: PageHeaderWithBackProps) {
   return (
-    <header className="mb-8 flex flex-col gap-4 border-b border-neutral-300 pb-6">
+    <header className="mb-6 sm:mb-8 flex flex-col gap-4 border-b border-neutral-300 pb-6">
       <div className="flex items-center justify-between gap-4">
         <Link
           href={backHref}

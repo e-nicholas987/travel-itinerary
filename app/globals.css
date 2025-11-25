@@ -46,6 +46,10 @@
     }
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   input[type="date"] {
     appearance: none;
     -webkit-appearance: none;

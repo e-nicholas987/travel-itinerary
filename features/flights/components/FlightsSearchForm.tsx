@@ -37,8 +37,8 @@ const defaultValues: FlightsSearchFormValues = {
   adults: "",
   children: "",
   cabinClass: "",
-  sort: "BEST",
-  stops: "none",
+  sort: "",
+  stops: "",
   currency_code: "",
 };
 
@@ -134,6 +134,7 @@ export default function FlightsSearchForm({
                     placeholder="Departure airport or city"
                     value={field.value}
                     onChange={field.onChange}
+                    ref={field.ref}
                     options={fromOptions}
                     enableSearch
                     searchValue={fromQuery}
@@ -159,6 +160,7 @@ export default function FlightsSearchForm({
                     label="To"
                     isRequired
                     placeholder="Arrival airport or city"
+                    ref={field.ref}
                     value={field.value}
                     onChange={field.onChange}
                     options={toOptions}

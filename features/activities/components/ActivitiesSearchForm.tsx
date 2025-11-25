@@ -142,6 +142,7 @@ export default function ActivitiesSearchForm({
                     isRequired
                     value={field.value}
                     onChange={field.onChange}
+                    ref={field.ref}
                     options={locationOptions}
                     enableSearch
                     searchValue={locationSearch}
