@@ -177,9 +177,7 @@ export default function FlightsSearchForm({
                 )}
               />
             </div>
-          </FormSection>
 
-          <FormSection>
             <div className="grid gap-4 md:grid-cols-2">
               <InputField
                 id="flights-depart-date"
