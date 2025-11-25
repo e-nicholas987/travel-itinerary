@@ -50,7 +50,7 @@ export default function HotelsSearchPage() {
     if (searchHotelsError?.message.includes("error")) {
       return searchHotelsError?.message;
     }
-    return searchHotelsError && getApiError(searchHotelsError as unknown);
+    return searchHotelsError && getApiError(searchHotelsError);
   }, [searchHotelsError]);
 
   return (
