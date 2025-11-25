@@ -43,7 +43,7 @@ export default function Sidebar() {
   const isActiveRoute = useActiveRoute();
 
   return (
-    <div className="pb-23.5 overflow-y-hidden flex flex-col space-y-16 rounded-sm bg-white px-2 pt-6">
+    <div className="pb-6 2xl:pb-23.5 max-h-full flex flex-col space-y-4 2xl:space-y-16 rounded-sm bg-white px-2 pt-6">
       <nav className="space-y-3 overflow-y-auto px-4">
         {SIDEBAR_ITEMS.map((item) => {
           const isActive = isActiveRoute(item.href);
