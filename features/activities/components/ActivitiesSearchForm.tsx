@@ -19,16 +19,16 @@ import {
 } from "../validation/activitiesSearchSchema";
 import { useSearchAttractionLocation } from "../hooks/useSearchAttractionLocation";
 import type {
+  SearchAttractionsData,
   SearchAttractionsParams,
-  SearchAttractionsResponse,
   SortBy,
 } from "../types";
 import { ACTIVITIES_SORT_OPTIONS } from "../constants/selectOptions";
 
 type ActivitiesSearchFormProps = {
   onSearch: (params: SearchAttractionsParams) => void;
-  isLoadingLocations: boolean;
-  locations?: SearchAttractionsResponse;
+  isLoadingAttractions: boolean;
+  attractions?: SearchAttractionsData;
 };
 
 const defaultValues: ActivitiesSearchFormValues = {
@@ -46,8 +46,8 @@ const defaultValues: ActivitiesSearchFormValues = {
 
 export default function ActivitiesSearchForm({
   onSearch,
-  isLoadingLocations,
-  locations,
+  isLoadingAttractions,
+  attractions,
 }: ActivitiesSearchFormProps) {
   const [showAdvancedFilters, setShowAdvancedFilters] = useState<boolean>(true);
   const [locationSearch, setLocationSearch] = useState<string>("");
@@ -236,7 +236,7 @@ export default function ActivitiesSearchForm({
             </div>
           </FormSection>
 
-          {locations?.data && (
+          {attractions && (
             <div className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
               <div className="flex items-center justify-between gap-2">
                 <button
@@ -251,7 +251,9 @@ export default function ActivitiesSearchForm({
                 </button>
               </div>
 
-              {showAdvancedFilters && <AdvancedFilters response={locations} />}
+              {showAdvancedFilters && (
+                <AdvancedFilters attractions={attractions} />
+              )}
             </div>
           )}
         </div>
@@ -273,7 +275,7 @@ export default function ActivitiesSearchForm({
             type="submit"
             variant="primary"
             size="md"
-            isLoading={isLoadingLocations}
+            isLoading={isLoadingAttractions}
             className="w-full sm:w-auto"
           >
             Search activities

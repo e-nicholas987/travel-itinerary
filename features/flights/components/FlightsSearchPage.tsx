@@ -2,60 +2,67 @@
 
 import { useMemo, useState } from "react";
 
-import { AirplaneInFlightIcon } from "@/components/ui/icons";
-import { ROUTES } from "@/constants/routes";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+
+import EmptyResultsState from "@/components/shared/EmptyResultsState";
 import ErrorBanner from "@/components/shared/ErrorBanner";
 import PageHeaderWithBack from "@/components/shared/PageHeader";
 import ResultsHeader from "@/components/shared/ResultsHeader";
-import EmptyResultsState from "@/components/shared/EmptyResultsState";
 import ResultsLoader from "@/components/shared/ResultsLoader";
+import { AirplaneInFlightIcon } from "@/components/ui/icons";
+import { ROUTES } from "@/constants/routes";
+import useScrollIntoView from "@/hooks/useScrollIntoView";
 import { getApiError } from "@/lib/utils/getApiError";
 
-import type { SearchFlightsParams, SearchFlightsResponse } from "../types";
-import { useSearchFlights } from "../hooks/useSearchFlights";
-import FlightsSearchForm from "./FlightsSearchForm";
+import { searchFlights } from "../api/flightServices";
 import FlightCard from "./FlightCard";
-import useScrollIntoView from "@/hooks/useScrollIntoView";
+import FlightsSearchForm from "./FlightsSearchForm";
+import type {
+  SearchFlightsData,
+  SearchFlightsParams,
+  SearchFlightsResponse,
+} from "../types";
 
 export default function FlightsSearchPage() {
-  const [searchParams, setSearchParams] = useState<SearchFlightsParams | null>(
-    null
-  );
+  const [searchedFlights, setSearchedFlights] = useState<
+    SearchFlightsData | undefined
+  >();
 
   const {
-    data: flightsResponse,
-    isFetching: isFetchingFlights,
+    mutate: searchFlightsMutation,
+    isPending: isLoadingFlights,
     error: searchFlightsError,
-    refetch,
-  } = useSearchFlights({
-    params: searchParams ?? {
-      fromId: "",
-      toId: "",
-      departDate: "",
-    },
-    enabled: !!searchParams,
+  } = useMutation({
+    mutationFn: searchFlights,
   });
 
   const scrollIntoViewRef = useScrollIntoView<HTMLDivElement>(
-    flightsResponse?.data?.flightOffers?.length ?? 0
+    searchedFlights?.flightOffers?.length ?? 0
   );
 
   const handleSearch = (params: SearchFlightsParams) => {
-    setSearchParams(params);
-    if (JSON.stringify(params) === JSON.stringify(searchParams)) refetch();
+    searchFlightsMutation(params, {
+      onSuccess: (data) => {
+        setSearchedFlights(data?.data);
+      },
+      onError: (error) => {
+        toast.error(getApiError(error));
+      },
+    });
   };
 
   const errorMessage = useMemo(() => {
     if (
       (
-        flightsResponse as SearchFlightsResponse | undefined
+        searchedFlights as SearchFlightsResponse | undefined
       )?.message?.includes?.("error")
     ) {
-      return flightsResponse?.message;
+      return searchFlightsError?.message;
     }
 
     return searchFlightsError && getApiError(searchFlightsError);
-  }, [flightsResponse, searchFlightsError]);
+  }, [searchedFlights, searchFlightsError]);
 
   return (
     <section className="flex-1 rounded-sm bg-white p-4 sm:p-6 lg:p-8">
@@ -71,31 +78,31 @@ export default function FlightsSearchPage() {
 
       <FlightsSearchForm
         onSearch={handleSearch}
-        isLoadingFlights={isFetchingFlights}
+        isLoadingFlights={isLoadingFlights}
       />
 
-      {isFetchingFlights && !flightsResponse?.data && (
+      {isLoadingFlights && !searchedFlights && (
         <div className="mt-4">
           <ResultsLoader message="Searching for flights..." />
         </div>
       )}
 
-      {flightsResponse?.data && (
+      {searchedFlights && (
         <section ref={scrollIntoViewRef} className="space-y-4">
           <ResultsHeader
             title="Available flights"
-            count={flightsResponse.data?.flightOffers?.length}
+            count={searchedFlights.flightOffers?.length}
             label="options"
           />
 
-          {!flightsResponse.data?.flightOffers?.length ? (
+          {!searchedFlights.flightOffers?.length ? (
             <EmptyResultsState
               title="No flights found for your current filters."
               description="Try adjusting your dates, route, or filters to see more options."
             />
           ) : (
             <div className="space-y-3">
-              {flightsResponse.data.flightOffers.map((offer) => (
+              {searchedFlights.flightOffers.map((offer) => (
                 <FlightCard key={offer.token} offer={offer} isSearchResult />
               ))}
             </div>

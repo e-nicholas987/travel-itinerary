@@ -2,14 +2,14 @@ import React, { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { FilterGroup } from "./FilterGroup";
-import { SearchAttractionsResponse } from "../types";
+import { SearchAttractionsData } from "../types";
 import type { ActivitiesSearchFormValues } from "../validation/activitiesSearchSchema";
 
 type AdvancedFiltersProps = {
-  response: SearchAttractionsResponse | undefined;
+  attractions: SearchAttractionsData | undefined;
 };
 
-export default function AdvancedFilters({ response }: AdvancedFiltersProps) {
+export default function AdvancedFilters({ attractions }: AdvancedFiltersProps) {
   const { watch, setValue } = useFormContext<ActivitiesSearchFormValues>();
 
   const typeFilters = watch("typeFilters") ?? [];
@@ -19,39 +19,39 @@ export default function AdvancedFilters({ response }: AdvancedFiltersProps) {
 
   const activityTypeFilterOptions = useMemo(() => {
     return (
-      response?.data?.filterOptions?.typeFilters?.map((filter) => ({
+      attractions?.filterOptions?.typeFilters?.map((filter) => ({
         label: filter.name,
         value: filter.tagname,
       })) ?? []
     );
-  }, [response?.data?.filterOptions?.typeFilters]);
+  }, [attractions?.filterOptions?.typeFilters]);
 
   const priceFilterOptions = useMemo(() => {
     return (
-      response?.data?.filterOptions?.priceFilters?.map((filter) => ({
+      attractions?.filterOptions?.priceFilters?.map((filter) => ({
         label: filter.name,
         value: filter.tagname,
       })) ?? []
     );
-  }, [response?.data?.filterOptions?.priceFilters]);
+  }, [attractions?.filterOptions?.priceFilters]);
 
   const ufiFilterOptions = useMemo(() => {
     return (
-      response?.data?.filterOptions?.ufiFilters?.map((filter) => ({
+      attractions?.filterOptions?.ufiFilters?.map((filter) => ({
         label: filter.name,
         value: filter.tagname,
       })) ?? []
     );
-  }, [response?.data?.filterOptions?.ufiFilters]);
+  }, [attractions?.filterOptions?.ufiFilters]);
 
   const labelFilterOptions = useMemo(() => {
     return (
-      response?.data?.filterOptions?.labelFilters?.map((filter) => ({
+      attractions?.filterOptions?.labelFilters?.map((filter) => ({
         label: filter.name,
         value: filter.tagname,
       })) ?? []
     );
-  }, [response?.data?.filterOptions?.labelFilters]);
+  }, [attractions?.filterOptions?.labelFilters]);
 
   const handleToggle = (
     key: keyof ActivitiesSearchFormValues,

@@ -62,9 +62,7 @@ export default function HotelCard({
       )}
     >
       <div className="flex flex-col gap-4 bg-white p-4 sm:flex-row sm:gap-6 sm:p-6 sm:pr-0">
-        <ImageCarousel
-          images={photoUrls && photoUrls.length > 0 ? [photoUrls[0]] : []}
-        />
+        <ImageCarousel images={photoUrls || []} />
         <div className="flex flex-1 flex-col gap-2">
           <header className="flex flex-col gap-3 pl-0 sm:pl-4 sm:pr-6 md:flex-row md:items-start md:justify-between md:gap-4">
             <div>

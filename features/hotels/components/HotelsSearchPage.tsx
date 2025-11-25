@@ -4,8 +4,10 @@ import { useMemo, useState } from "react";
 
 import { BuildingsIcon } from "@/components/ui/icons";
 import { ROUTES } from "@/constants/routes";
-import type { SearchHotelsParams } from "@/features/hotels/types";
-import { useSearchHotels } from "@/features/hotels/hooks/useSearchHotels";
+import type {
+  SearchHotelsHotel,
+  SearchHotelsParams,
+} from "@/features/hotels/types";
 import ErrorBanner from "@/components/shared/ErrorBanner";
 import PageHeaderWithBack from "@/components/shared/PageHeader";
 import ResultsHeader from "@/components/shared/ResultsHeader";
@@ -15,36 +17,43 @@ import HotelCard from "@/features/hotels/components/HotelCard";
 import HotelsSearchForm from "@/features/hotels/components/HotelsSearchForm";
 import { getApiError } from "@/lib/utils/getApiError";
 import useScrollIntoView from "@/hooks/useScrollIntoView";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { searchHotels } from "../api/hotelsServices";
 
 export default function HotelsSearchPage() {
-  const [searchParams, setSearchParams] = useState<
-    SearchHotelsParams | undefined
-  >(undefined);
-
+  const [searchedHotels, setSearchedHotels] = useState<SearchHotelsHotel[]>([]);
   const {
-    data: hotelsResponse,
-    isLoading: isLoadingHotels,
+    mutate: searchHotelsMutation,
+    isPending: isLoadingHotels,
     error: searchHotelsError,
-    refetch,
-  } = useSearchHotels({
-    params: searchParams,
-    enabled: !!searchParams?.dest_id,
+  } = useMutation({
+    mutationFn: searchHotels,
   });
+
+  console.log(searchedHotels);
+
   const scrollIntoViewRef = useScrollIntoView<HTMLDivElement>(
-    hotelsResponse?.data?.hotels?.length ?? 0
+    searchedHotels?.length ?? 0
   );
 
   const handleSearch = (params: SearchHotelsParams) => {
-    setSearchParams(params);
-    if (JSON.stringify(params) === JSON.stringify(searchParams)) refetch();
+    searchHotelsMutation(params, {
+      onSuccess: (data) => {
+        setSearchedHotels(data.data?.hotels ?? []);
+      },
+      onError: (error) => {
+        toast.error(getApiError(error));
+      },
+    });
   };
 
   const errorMessage = useMemo(() => {
-    if (hotelsResponse?.message.includes("error")) {
-      return hotelsResponse?.message;
+    if (searchHotelsError?.message.includes("error")) {
+      return searchHotelsError?.message;
     }
     return searchHotelsError && getApiError(searchHotelsError as unknown);
-  }, [hotelsResponse?.message, searchHotelsError]);
+  }, [searchHotelsError]);
 
   return (
     <section className="flex-1 rounded-sm bg-white p-4 sm:p-6 lg:p-8">
@@ -63,28 +72,28 @@ export default function HotelsSearchPage() {
         isLoadingHotels={isLoadingHotels}
       />
 
-      {!hotelsResponse?.data && isLoadingHotels && (
+      {!searchedHotels?.length && isLoadingHotels && (
         <div className="mt-4">
           <ResultsLoader message="Searching for hotels..." />
         </div>
       )}
 
-      {hotelsResponse?.data && (
+      {searchedHotels?.length && (
         <section ref={scrollIntoViewRef} className="space-y-4">
           <ResultsHeader
             title="Available hotels"
-            count={hotelsResponse.data.hotels.length}
+            count={searchedHotels.length}
             label="properties"
           />
 
-          {hotelsResponse.data.hotels.length === 0 ? (
+          {searchedHotels.length === 0 ? (
             <EmptyResultsState
               title="No hotels found for your current filters."
               description="Try adjusting your dates, destination, or filters to see more options."
             />
           ) : (
             <div className="space-y-3">
-              {hotelsResponse.data.hotels.map((hotel) => (
+              {searchedHotels.map((hotel) => (
                 <HotelCard key={hotel.hotel_id} hotel={hotel} isSearchResult />
               ))}
             </div>
