@@ -23,6 +23,7 @@ import { searchHotels } from "../api/hotelsServices";
 
 export default function HotelsSearchPage() {
   const [searchedHotels, setSearchedHotels] = useState<SearchHotelsHotel[]>([]);
+  const [scrollTrigger, setScrollTrigger] = useState<number>(0);
   const {
     mutate: searchHotelsMutation,
     isPending: isLoadingHotels,
@@ -31,14 +32,13 @@ export default function HotelsSearchPage() {
     mutationFn: searchHotels,
   });
 
-  const scrollIntoViewRef = useScrollIntoView<HTMLDivElement>(
-    searchedHotels?.length ?? 0
-  );
+  const scrollIntoViewRef = useScrollIntoView<HTMLDivElement>(scrollTrigger);
 
   const handleSearch = (params: SearchHotelsParams) => {
     searchHotelsMutation(params, {
       onSuccess: (data) => {
         setSearchedHotels(data.data?.hotels ?? []);
+        setScrollTrigger((t) => t + 1);
       },
       onError: (error) => {
         toast.error(getApiError(error));

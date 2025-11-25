@@ -28,6 +28,7 @@ export default function FlightsSearchPage() {
   const [searchedFlights, setSearchedFlights] = useState<
     SearchFlightsData | undefined
   >();
+  const [scrollTrigger, setScrollTrigger] = useState<number>(0);
 
   const {
     mutate: searchFlightsMutation,
@@ -37,14 +38,13 @@ export default function FlightsSearchPage() {
     mutationFn: searchFlights,
   });
 
-  const scrollIntoViewRef = useScrollIntoView<HTMLDivElement>(
-    searchedFlights?.flightOffers?.length ?? 0
-  );
+  const scrollIntoViewRef = useScrollIntoView<HTMLDivElement>(scrollTrigger);
 
   const handleSearch = (params: SearchFlightsParams) => {
     searchFlightsMutation(params, {
       onSuccess: (data) => {
         setSearchedFlights(data?.data);
+        setScrollTrigger((t) => t + 1);
       },
       onError: (error) => {
         toast.error(getApiError(error));

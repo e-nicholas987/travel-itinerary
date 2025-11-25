@@ -25,6 +25,7 @@ export default function ActivitiesSearchPage() {
   const [searchedAttractions, setSearchedAttractions] = useState<
     SearchAttractionsData | undefined
   >();
+  const [scrollTrigger, setScrollTrigger] = useState<number>(0);
   const {
     mutate: searchAttractionsMutation,
     isPending: isLoadingActivities,
@@ -32,14 +33,13 @@ export default function ActivitiesSearchPage() {
   } = useMutation({
     mutationFn: searchAttractions,
   });
-  const scrollIntoViewRef = useScrollIntoView<HTMLDivElement>(
-    searchedAttractions?.products?.length ?? 0
-  );
+  const scrollIntoViewRef = useScrollIntoView<HTMLDivElement>(scrollTrigger);
 
   const handleSearch = (params: SearchAttractionsParams) => {
     searchAttractionsMutation(params, {
       onSuccess: (data) => {
         setSearchedAttractions(data.data);
+        setScrollTrigger((t) => t + 1);
       },
       onError: (error) => {
         toast.error(getApiError(error));
