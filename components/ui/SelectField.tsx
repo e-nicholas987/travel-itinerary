@@ -102,7 +102,6 @@ const SelectField = forwardRef<HTMLButtonElement, SelectFieldProps>(
             id={id}
             aria-invalid={!!error}
             aria-describedby={error ? `${id}-error` : undefined}
-            className="text-left whitespace-nowrap border border-primary-100 truncate focus:ring-primary-600/30 focus:ring-2 focus:border-primary-600 focus:shadow-primary-600"
             ref={ref}
           >
             <SelectValue placeholder={isLoading ? "Loading..." : placeholder} />
