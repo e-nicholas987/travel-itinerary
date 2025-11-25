@@ -109,7 +109,13 @@ export default function SelectField({
           <SelectValue placeholder={isLoading ? "Loading..." : placeholder} />
         </SelectTrigger>
 
-        <SelectContent hideTopScrollbar={enableSearch} className="pt-0">
+        <SelectContent
+          hideTopScrollbar={enableSearch}
+          className={cn(
+            "pt-0",
+            !options.length && "max-w-(--radix-select-trigger-width)"
+          )}
+        >
           {enableSearch && (
             <div className="sticky top-0 z-10 border-b border-neutral-200 bg-white px-2 pb-2 pt-2">
               <input
@@ -120,17 +126,17 @@ export default function SelectField({
                   onSearchChange?.(event.target.value);
                 }}
                 placeholder="Search..."
-                className="h-11 w-full rounded-sm border border-primary-1100 px-2  text-black outline-none transition-shadow focus:border-primary-600 focus:bg-white focus:ring-2 focus:ring-primary-600/30"
+                className="h-11 w-full placeholder:text-sm rounded-sm border border-primary-1100 px-2  text-black outline-none transition-shadow focus:border-primary-600 focus:bg-white focus:ring-2 focus:ring-primary-600/30"
               />
             </div>
           )}
 
           {isLoading ? (
-            <div className="px-4 text-center py-8 text-sm text-black-secondary">
+            <div className="px-4 py-8 text-xs sm:text-sm text-center text-black-secondary">
               Loading...
             </div>
           ) : filteredOptions.length === 0 && emptyStateText ? (
-            <div className="px-4 py-8 text-black-secondary text-center text-sm">
+            <div className="px-4 py-8 text-xs sm:text-sm text-black-secondary whitespace-normal text-center">
               {emptyStateText}
             </div>
           ) : (
