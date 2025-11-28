@@ -15,7 +15,7 @@ export default function Page() {
         <RefreshCcw />
       </button>
       <div className="flex items-center gap-2 p-4 rounded-2xl hover:text-white active:text-white text-black hover:bg-primary-600 active:bg-primary-600 transition-colors">
-        <span>Div with Hover Effect</span>
+        <span>Div with Hover Effect New</span>
         <RefreshCcw />
       </div>
     </div>
