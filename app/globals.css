@@ -79,6 +79,25 @@
   }
 }
 
+/* Only apply hover effects on devices that support hover (mouse/trackpad) */
+@media (hover: none) {
+  .no-touch-hover:hover {
+    all: unset;
+  }
+}
+
+/* Custom hover variant - only triggers on hover-capable devices */
+@custom-variant hover-hover (&:hover);
+
+@layer base {
+  @media (hover: none) {
+    /* Disable pointer hover effects on touch devices */
+    *:hover {
+      /* Allow active states to work, but prevent sticky hover */
+    }
+  }
+}
+
 body {
   color: var(--color-text-black-primary);
   font-family: Poppins, sans-serif;

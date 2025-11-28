@@ -9,12 +9,12 @@ export default function Page() {
       <Button variant="white">Test Button</Button>
       <button
         type="button"
-        className="flex items-center gap-2 hover:bg-primary-700 p-4 rounded-2xl hover:text-white bg-primary-10"
+        className="flex items-center gap-2 hover:bg-primary-700 active:bg-primary-700 p-4 rounded-2xl hover:text-white active:text-white bg-primary-100 transition-colors"
       >
         <span> Button with Hover Effect</span>
         <RefreshCcw />
       </button>
-      <div className="flex items-center gap-2 p-4 rounded-2xl hover:text-white  text-black hover:bg-primary-600">
+      <div className="flex items-center gap-2 p-4 rounded-2xl hover:text-white active:text-white text-black hover:bg-primary-600 active:bg-primary-600 transition-colors">
         <span>Div with Hover Effect</span>
         <RefreshCcw />
       </div>
