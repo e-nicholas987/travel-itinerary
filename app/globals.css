@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Restore Tailwind v2 hover behavior (works on mobile via tap/sticky hover) */
+@custom-variant hover (&:hover);
+
 @theme {
   /* Primary Colors */
   --color-primary-100: #e7f0ff;
@@ -76,25 +79,6 @@
 
   .top-layout-offset {
     top: var(--layout-offset);
-  }
-}
-
-/* Only apply hover effects on devices that support hover (mouse/trackpad) */
-@media (hover: none) {
-  .no-touch-hover:hover {
-    all: unset;
-  }
-}
-
-/* Custom hover variant - only triggers on hover-capable devices */
-@custom-variant hover-hover (&:hover);
-
-@layer base {
-  @media (hover: none) {
-    /* Disable pointer hover effects on touch devices */
-    *:hover {
-      /* Allow active states to work, but prevent sticky hover */
-    }
   }
 }
 
